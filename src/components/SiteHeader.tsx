@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import LanguageToggle from "@/components/LanguageToggle";
 import PageContainer from "@/components/ui/PageContainer";
@@ -13,8 +14,16 @@ export default function SiteHeader() {
         <Link
           href="/"
           aria-label={t("nav.home")}
-          className="flex min-h-11 items-center text-2xl font-bold tracking-tight text-accent"
+          className="flex min-h-11 items-center gap-2 text-2xl font-bold tracking-tight text-accent"
         >
+          <Image
+            src="/brand/hayday-logo-mark.svg"
+            alt=""
+            width={32}
+            height={32}
+            priority
+            className="h-8 w-8"
+          />
           Hayday
         </Link>
         <LanguageToggle />
