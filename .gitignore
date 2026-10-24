@@ -43,3 +43,6 @@ yarn-error.log*
 .vercel
 *.tsbuildinfo
 next-env.d.ts
+
+# keep the example env committed (overrides the scaffold rule above)
+!.env.example

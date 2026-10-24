@@ -170,3 +170,66 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: (1) Keep the verified `/help` list as is; adding more organizations is a polish task after the demo path works. (2) Formal "usted" Spanish is confirmed for all copy. (3) The brief English flash on first Spanish load is acceptable for the demo; do not spend time on it.
 - Why: Demo-first (CLAUDE.md). None of the three affects the demo script.
 - Consequences / shortcuts: If time remains in hour 5+, Kern County organizations are the first polish item.
+
+## D-017 — LLM model: anthropic/claude-sonnet-5.5 on OpenRouter
+- Date: 2026-10-24 11:10
+- Decided by: Opus (session: handoffs/03-llm-and-api.md)
+- Status: Accepted
+- Importance: Major
+- Decision: `LLM_MODEL=anthropic/claude-sonnet-5.5`, in `.env.example` and `.env`. Slug copied from the live list at https://openrouter.ai/api/v1/models on 2026-10-24, which shows input modalities `text,image,file`, 1M context, $2/M input and $10/M output tokens.
+- Why: SETUP.md names Sonnet 5.5 as the fast default. It is the newest Sonnet on the list and accepts images. Opus 5.5 ($4/$20) and Fable 5.1 ($10/$50) are slower and dearer for a task Sonnet did perfectly in the live test; Haiku 5.5 is cheaper but riskier on blurry photos. Live test: one clean stub took about 7 s (about 15 s through the route), every field correct.
+- Consequences / shortcuts: Changing the model is a one-line edit in `.env`. Vercel needs the same value set (handoff 07).
+
+## D-018 — Extraction prompt: transcribe only, JSON only, lenient zod parsing
+- Date: 2026-10-24 11:10
+- Decided by: Opus (session: handoffs/03-llm-and-api.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: The system prompt in `src/lib/llm.ts` lists every `PayStub` key with its meaning, asks for one JSON object with null for anything not printed, forbids calculating values (no gross from hours × rate: D-007), wants ISO dates converted from US month/day order, gives Spanish label hints, asks for `rawText` of every line and a `confidence` that drops for blur or glare, and says what to return for a non-stub image. No `response_format`; the reply is parsed by taking the outermost `{...}`. Zod accepts `"$1,234.50"` strings, nulls and `MM/DD/YYYY`, and clamps confidence to 0–1.
+- Why: Telling the model to copy, not compute, keeps all math in the rules engine. Lenient parsing turns small format slips into valid data instead of a retry. `response_format` support for Anthropic models through OpenRouter is uneven, and a prompt plus parser works on any model.
+- Consequences / shortcuts: `restBreakPay` is filled only when a separate line exists, which is what the `piece-rest` rule needs.
+
+## D-019 — Retry and fallback policy for both AI calls
+- Date: 2026-10-24 11:10
+- Decided by: Opus (session: handoffs/03-llm-and-api.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: Extraction: on a reply that fails validation, retry once with the assistant's reply and the zod error fed back; on a second failure return `{ payType: "unknown", confidence: 0, rawText }` (rawText rescued from the reply if possible). API errors throw and the route returns 500. Letter: same single retry, plus a check that the total and every finding amount appear in both languages and no other dollar figure does; after a second failure, or on an API error, return the deterministic template letter (`src/lib/fixtures/letters.ts`). Missing `OPENROUTER_API_KEY` or `LLM_MODEL` throws `LlmConfigError` naming the variable. OpenAI SDK: 60 s timeout, 1 automatic retry on 429/5xx. Routes set `maxDuration = 60`.
+- Why: One retry fixes most format slips without doubling latency on stage. A broken extraction should still let the worker type values on the review page, but a dead key or no credit must be visible, so API errors are not hidden. For the letter the template is a correct letter, so falling back is safe and keeps the claim page working; the amount check enforces D-007 on AI-written text.
+- Consequences / shortcuts: A letter that falls back looks plainer; the server logs a `[llm]` warning when that happens.
+
+## D-020 — /api/extract input limits: 8 MB decoded image, JPEG/PNG/WebP/GIF only
+- Date: 2026-10-24 11:10
+- Decided by: Opus (session: handoffs/03-llm-and-api.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: The route rejects bodies over about 10.7 MB (base64 of 8 MB plus 64 KB) by `content-length`, then rejects decoded images over 8 MB with 413. Accepted `mimeType`: `image/jpeg` (also `image/jpg`), `image/png`, `image/webp`, `image/gif`; anything else, including HEIC, is a 400. A `data:...;base64,` prefix is stripped if sent. Error bodies are `{ error: code, message }`.
+- Why: 8 MB is the handoff's limit. These four types are what Claude vision accepts.
+- Consequences / shortcuts: 8 MB is above two real limits: Anthropic's 5 MB per image and Vercel's 4.5 MB request body for functions. On Vercel, anything over about 3.3 MB of image fails before reaching the route. See D-022.
+
+## D-021 — DEMO_MODE fixtures: local demo stub, template letter built from the input
+- Date: 2026-10-24 11:10
+- Decided by: Opus (session: handoffs/03-llm-and-api.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: In DEMO_MODE `extractPayStub` returns `demoStub` from `src/lib/fixtures/demo-stub.ts` after 1.5 s, because `src/lib/fixtures/samples.ts` (handoff 02) did not exist yet. `writeClaimLetter` returns `buildTemplateLetter(input)` after 0.8 s: a fixed bilingual template filled from the real findings, not a frozen letter.
+- Why: A frozen letter would show amounts that do not match the result page as soon as the rules or samples change. The template always matches, and it doubles as the fallback in D-019.
+- Consequences / shortcuts: Shortcut to clean up: once `samples.ts` lands, switch `extractPayStub`'s demo branch to `samples[0].stub` and delete `demo-stub.ts`, so DEMO_MODE extraction matches sample 1 exactly. The demo stub is a 48-hour grape piece-rate stub (412 trays × $1.10).
+
+## D-022 — Open: downscale photos in the browser before upload (handoff 04)
+- Date: 2026-10-24 11:10
+- Decided by: Opus (session: handoffs/03-llm-and-api.md), needs Fable 5.1
+- Status: Open
+- Importance: Major
+- Decision: Question for Fable: should handoff 04 resize every photo in the browser (canvas, long edge about 1600 px, JPEG quality about 0.85, usually 200–600 KB) before calling `/api/extract`? Recommendation: yes.
+- Why: Phone photos are often 3–8 MB. Vercel rejects request bodies over 4.5 MB and Anthropic rejects images over 5 MB, so full-size photos will fail in production even though they pass locally. Claude shrinks anything over about 1568 px on the long edge anyway, so a smaller upload loses no accuracy. Drawing to a canvas and exporting JPEG also turns iPhone HEIC into JPEG in Safari, which the route requires (D-020). Smaller uploads are also faster on rural cell signal.
+- Consequences / shortcuts: About 20 lines in 04's upload code. Without it, the live demo must use small images.
+
+## D-023 — Resolves D-022: photos are downscaled in the browser before upload
+- Date: 2026-10-24
+- Decided by: Fable 5.1 (planning)
+- Status: Accepted (closes D-022)
+- Importance: Minor
+- Decision: Handoff 04 downscales images client-side to a 1600 px long edge, JPEG quality 0.85, before POSTing to `/api/extract`. This was already in the handoff; 03's analysis (Vercel 4.5 MB body limit, Anthropic 5 MB image limit, HEIC conversion) confirms it is required, not optional.
+- Why: Phone photos routinely exceed 3 MB. Downscaling also converts HEIC from iPhones to JPEG, which the API accepts.
+- Consequences / shortcuts: Review page must handle `payType: "unknown"` with `confidence: 0` by offering manual entry (03's note).
