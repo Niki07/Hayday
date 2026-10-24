@@ -422,3 +422,12 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: Vercel project `hayday` (scope diki8), production alias `https://hayday-sigma.vercel.app`. Deployed with `npx vercel deploy --prod --yes` from this folder; no Git integration. Per-deployment `*-diki8.vercel.app` URLs require a Vercel login (default deployment protection), so the alias is the one to share. Env: `LLM_MODEL`, `DEMO_MODE` set from the CLI; `OPENROUTER_API_KEY` is added by Niki herself so the planning session never handles the secret.
 - Why: Vercel was the team's choice; CLI deploy avoids needing a GitHub repo today.
 - Consequences / shortcuts: Every redeploy is a manual `vercel deploy --prod`. `DEMO_MODE` is `true` until the key is in; then flip to `false` and redeploy.
+
+## D-045 — PDF in one language, sample buttons hidden, help buttons prominent
+- Date: 2026-10-24
+- Decided by: Niki's team with Fable 5.1
+- Status: Accepted
+- Importance: Minor
+- Decision: (1) The claim page shows one letter at a time with an English/Español tab on every screen size, and "Download PDF" prints only the selected letter plus a findings table in that language. (2) The visible "Try a sample" buttons are removed from the home and upload pages; `/check?sample=N` still opens the sample sheet for demos. (3) "Find free legal aid" (`/help`) and "How to file a wage claim" (Labor Commissioner page, new tab) appear as a pair of full-width buttons on the result page and directly under Download PDF on the claim page.
+- Why: Niki's feedback after the first live run: a worker wants the letter in their own language, the sample button looks odd to a real user, and the two actions that actually get money back were buried at the bottom.
+- Consequences / shortcuts: The demo now starts from the `/check?sample=1` link or from photographing `/samples/1` on screen; DEMO.md must say so.

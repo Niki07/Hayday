@@ -1,6 +1,5 @@
 /* Print stylesheet for /check/claim (handoff 05). "Download PDF" is window.print(): the browser's
-   "Save as PDF" turns this into the file. Page 1 is the English letter, page 2 the Spanish letter,
-   page 3 the findings table. The site header, footer and every on-screen control are hidden. */
+   "Save as PDF" turns this into the file. Page 1 is the letter in the selected language, page 2 the findings table in that language. The site header, footer and every on-screen control are hidden. */
 
 .print-only {
   display: none;
@@ -32,6 +31,10 @@
   }
 
   .letter-page {
+    display: none !important;
+  }
+
+  .letter-page.print-active {
     display: block !important;
     break-after: page;
     page-break-after: always;

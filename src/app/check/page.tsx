@@ -159,11 +159,6 @@ function UploadScreen() {
             onChange={onFile}
           />
           <p className="mt-4 text-sm text-gray-600">{t("check.tip")}</p>
-          <div className="mt-4 flex justify-center">
-            <Button variant="ghost" size="md" onClick={() => setSheetOpen(true)}>
-              {t("check.sample")}
-            </Button>
-          </div>
           <p className="mt-6 text-center text-sm text-gray-500">{t("check.privacy")}</p>
         </>
       )}

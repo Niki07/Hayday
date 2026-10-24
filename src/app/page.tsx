@@ -21,9 +21,6 @@ export default function Home() {
           <Button href="/check" className="w-full">
             {t("home.cta")}
           </Button>
-          <Button href="/check?sample=1" variant="secondary" className="w-full">
-            {t("home.sample")}
-          </Button>
         </div>
       </section>
 

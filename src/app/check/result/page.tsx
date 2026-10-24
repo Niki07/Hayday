@@ -9,6 +9,8 @@ import { formatUsd } from "@/lib/fixtures/letters";
 import { useCheck } from "@/lib/check-state";
 import type { Finding } from "@/lib/types";
 
+const LABOR_COMMISSIONER_URL = "https://www.dir.ca.gov/dlse/HowToFileWageClaim.htm";
+
 const severityDot: Record<Finding["severity"], string> = {
   high: "bg-red-600",
   medium: "bg-amber-500",
@@ -142,9 +144,14 @@ export default function ResultPage() {
 
       <section className="rounded-2xl bg-gray-50 p-5">
         <p className="text-gray-700">{t("result.disclaimer")}</p>
-        <Button href="/help" variant="secondary" size="md" className="mt-4 w-full sm:w-auto">
-          {t("result.disclaimer.cta")}
-        </Button>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <Button href="/help" variant="secondary" className="w-full">
+            {t("help.legalAid")}
+          </Button>
+          <Button href={LABOR_COMMISSIONER_URL} variant="secondary" className="w-full">
+            {t("help.fileClaim")}
+          </Button>
+        </div>
       </section>
 
       <section className="flex flex-col gap-3">

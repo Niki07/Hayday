@@ -195,10 +195,19 @@ function Claim({
             <p className="text-center text-sm text-gray-500">{t("claim.download.hint")}</p>
           </div>
 
+          <div className="no-print mx-auto mt-4 grid max-w-[640px] gap-3 sm:grid-cols-2">
+            <Button href="/help" variant="secondary" className="w-full">
+              {t("help.legalAid")}
+            </Button>
+            <Button href={LABOR_COMMISSIONER_URL} variant="secondary" className="w-full">
+              {t("help.fileClaim")}
+            </Button>
+          </div>
+
           <div
             role="tablist"
             aria-label={t("claim.heading")}
-            className="no-print mx-auto mt-8 flex max-w-[640px] rounded-xl bg-gray-100 p-1 lg:hidden"
+            className="no-print mx-auto mt-8 flex max-w-[640px] rounded-xl bg-gray-100 p-1"
           >
             {LANGS.map((l) => (
               <button
@@ -218,7 +227,7 @@ function Claim({
             ))}
           </div>
 
-          <div className="letter-columns mt-4 grid gap-6 lg:mt-8 lg:grid-cols-2">
+          <div className="letter-columns mx-auto mt-4 grid max-w-[640px] gap-6">
             {LANGS.map((l) => (
               <section
                 key={l}
@@ -226,8 +235,8 @@ function Claim({
                 role="tabpanel"
                 aria-labelledby={`tab-${l}`}
                 lang={l}
-                className={`letter-page rounded-2xl border border-gray-200 bg-white p-5 shadow-sm lg:block ${
-                  activeTab === l ? "block" : "hidden"
+                className={`letter-page rounded-2xl border border-gray-200 bg-white p-5 shadow-sm ${
+                  activeTab === l ? "print-active block" : "hidden"
                 }`}
               >
                 <div className="no-print mb-3 flex items-center justify-between gap-3">
@@ -254,19 +263,19 @@ function Claim({
           {/* Printed only: the third page, with both languages side by side in one table. */}
           <section className="print-only letter-text">
             <h2 style={{ fontSize: "14pt", fontWeight: 700 }}>
-              {dictionary.en["claim.table.title"]} / {dictionary.es["claim.table.title"]}
+              {dictionary[activeTab]["claim.table.title"]}
             </h2>
             <table className="findings-table mt-3">
               <thead>
                 <tr>
                   <th>
-                    {dictionary.en["claim.table.issue"]} / {dictionary.es["claim.table.issue"]}
+                    {dictionary[activeTab]["claim.table.issue"]}
                   </th>
                   <th>
-                    {dictionary.en["claim.table.rule"]} / {dictionary.es["claim.table.rule"]}
+                    {dictionary[activeTab]["claim.table.rule"]}
                   </th>
                   <th className="amount">
-                    {dictionary.en["claim.table.amount"]} / {dictionary.es["claim.table.amount"]}
+                    {dictionary[activeTab]["claim.table.amount"]}
                   </th>
                 </tr>
               </thead>
@@ -274,9 +283,7 @@ function Claim({
                 {findings.map((f) => (
                   <tr key={f.id}>
                     <td>
-                      {f.title.en}
-                      <br />
-                      <em>{f.title.es}</em>
+                      {f.title[activeTab]}
                     </td>
                     <td>{f.citation}</td>
                     <td className="amount">{f.amount > 0 ? formatUsd(f.amount) : "—"}</td>
@@ -285,7 +292,7 @@ function Claim({
                 <tr>
                   <td colSpan={2}>
                     <strong>
-                      {dictionary.en["claim.table.total"]} / {dictionary.es["claim.table.total"]}
+                      {dictionary[activeTab]["claim.table.total"]}
                     </strong>
                   </td>
                   <td className="amount">
@@ -295,9 +302,7 @@ function Claim({
               </tbody>
             </table>
             <p style={{ marginTop: "12pt", fontSize: "10pt" }}>
-              {dictionary.en["result.disclaimer"]}
-              <br />
-              <em>{dictionary.es["result.disclaimer"]}</em>
+              {dictionary[activeTab]["result.disclaimer"]}
             </p>
           </section>
 
