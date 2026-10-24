@@ -187,6 +187,9 @@ export default function OrganizerPage() {
   }
 
   const busy = rows.some((r) => r.status === "queued" || r.status === "reading");
+  const finishedCount = rows.filter((r) => r.status === "done" || r.status === "error").length;
+  const errorCount = rows.filter((r) => r.status === "error").length;
+  const progressPct = rows.length ? Math.round((finishedCount / rows.length) * 100) : 0;
   const hoursTotal = checked.reduce((a, r) => a + (r.stub.hoursWorked ?? 0), 0);
   const grossTotal = checked.reduce((a, r) => a + (r.stub.grossPay ?? 0), 0);
   const anyEstimated = summary.patterns.some((p) => p.estimated);
@@ -263,6 +266,28 @@ export default function OrganizerPage() {
         <p className="mt-8 text-center text-gray-600">{t("org.empty")}</p>
       ) : (
         <>
+          <div className="org-no-print mt-6 rounded-2xl border border-gray-200 bg-white p-4" role="status" aria-live="polite">
+            <div className="flex items-center justify-between gap-3 text-sm">
+              <span className={busy ? "font-semibold text-gray-900" : "font-semibold text-accent"}>
+                {busy ? t("org.progress.reading") : t("org.progress.done")}
+              </span>
+              <span className="text-gray-600">
+                {finishedCount} {t("org.progress.of")} {rows.length} {t("org.progress.read")}
+              </span>
+            </div>
+            <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-gray-100">
+              <div
+                className={`h-full rounded-full transition-[width] duration-500 ${busy ? "bg-accent/70" : "bg-accent"}`}
+                style={{ width: `${progressPct}%` }}
+              />
+            </div>
+            {errorCount > 0 && !busy && (
+              <p className="mt-2 text-sm text-red-700">
+                {errorCount} {t("org.progress.failed")}
+              </p>
+            )}
+          </div>
+
           <section className="mt-8 grid gap-3 sm:grid-cols-3" aria-live="polite">
             <Card>
               <p className="text-sm text-gray-600">{t("org.summary.stubs")}</p>
