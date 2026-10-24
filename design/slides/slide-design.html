@@ -1,13 +1,18 @@
 <!doctype html><html><head><meta charset="utf-8"><style>
 *{box-sizing:border-box} body{margin:0;width:1920px;height:1080px;background:#F6ECD9;font-family:Inter,-apple-system,"Helvetica Neue",Arial,sans-serif;color:#6B3A14;position:relative;overflow:hidden}
-.logo{position:absolute;top:56px;right:72px;width:150px;height:150px}
-h1{position:absolute;top:92px;left:96px;margin:0;font-size:104px;font-weight:300;letter-spacing:1px;text-transform:uppercase}
-.phone{position:absolute;left:120px;top:260px;width:390px;height:760px;border-radius:44px;border:10px solid #7A3A10;background:#fff;overflow:hidden;box-shadow:0 30px 60px rgba(122,58,16,.22);transform:rotate(-3deg)}
+.logo{position:absolute;top:48px;right:72px;width:130px;height:130px}
+h1{position:absolute;top:64px;left:96px;margin:0;font-size:92px;font-weight:300;letter-spacing:1px;text-transform:uppercase}
+.sub{position:absolute;top:184px;left:100px;font-size:28px;color:#8F5A2A}
+.phone{position:absolute;left:104px;top:262px;width:330px;height:660px;border-radius:40px;border:9px solid #7A3A10;background:#fff;overflow:hidden;box-shadow:0 24px 50px rgba(122,58,16,.22);transform:rotate(-3deg)}
 .phone img{width:100%;display:block}
-.list{position:absolute;left:640px;top:280px;right:96px;display:flex;flex-direction:column;gap:46px}
-.item .t{font-size:58px;font-weight:700;line-height:1.05;color:#6B3A14}
-.item .d{font-size:28px;color:#8F5A2A;margin-top:10px}
-.item .t span{color:#C2651F}
+.grid{position:absolute;left:520px;top:258px;right:96px;display:grid;grid-template-columns:1fr 1fr;gap:22px 30px}
+.card{background:#E3B993;border:3px solid #7A3A10;border-radius:22px;padding:20px 22px}
+.card.big{background:#C2651F;color:#F6ECD9}
+.card h3{margin:0 0 8px;font-size:27px;font-weight:700}
+.card ul{margin:0;padding-left:20px;font-size:19px;line-height:1.35}
+.card li{margin-bottom:4px}
+.band{position:absolute;left:96px;right:96px;top:960px;border-top:3px solid #7A3A10;padding-top:12px;font-size:21px;color:#6B3A14}
+.band b{color:#C2651F;letter-spacing:2px;text-transform:uppercase;margin-right:10px}
 </style></head><body>
 <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
 <g transform="translate(150 168) rotate(-45)" fill="#7A3A10" stroke="#7A3A10" stroke-linecap="round">
@@ -22,11 +27,33 @@ h1{position:absolute;top:92px;left:96px;margin:0;font-size:104px;font-weight:300
 <rect x="140" y="55" width="20" height="5" rx="2.5" fill="#E0A66B" transform="rotate(45 150 68)"/>
 </svg>
 <h1>Design + UX</h1>
+<div class="sub">Designed for a phone, in a field, by someone with ten minutes and a reason to be nervous.</div>
 <div class="phone"><img src="phone-upload.jpg"></div>
-<div class="list">
-  <div class="item"><div class="t">One thumb, <span>one action.</span></div><div class="d">Big buttons, four steps, works in sunlight.</div></div>
-  <div class="item"><div class="t">Spanish is <span>one tap</span> away.</div><div class="d">Every screen, the letter, the PDF.</div></div>
-  <div class="item"><div class="t"><span>No</span> dead ends.</div><div class="d">No stub, bad photo, not sure: there is always a next step.</div></div>
-  <div class="item"><div class="t">Show the math, <span>link the law.</span></div><div class="d">Every finding cites its section. Results labeled as estimates.</div></div>
+<div class="grid">
+  <div class="card"><h3>Mobile-first, one-handed</h3><ul>
+    <li>52 px tap targets, one primary action per screen</li>
+    <li>Four-step flow: Photo → Review → Result → Letter</li>
+    <li>Camera and gallery as separate buttons; verified at 375 px, no horizontal scroll</li></ul></div>
+  <div class="card"><h3>Bilingual by design</h3><ul>
+    <li>Typed i18n dictionary, every string in English and Spanish (formal <i>usted</i>)</li>
+    <li>One-tap toggle on every page, choice persisted</li>
+    <li>Letter, PDF and CSV follow the chosen language</li></ul></div>
+  <div class="card big"><h3>Trust made visible</h3><ul>
+    <li>Each finding: plain title, severity, the arithmetic, a linked Labor Code citation</li>
+    <li>"Checked against California law" strip on every result; rules page; estimates labeled</li>
+    <li>Rate source and verification date shown on screen</li></ul></div>
+  <div class="card"><h3>No dead ends</h3><ul>
+    <li>No stub? Enter what you know (and learn it is itself a violation)</li>
+    <li>Photo failed? Retry or enter by hand; low-confidence reads flagged for review</li>
+    <li>Progress states for 7–15 s AI calls; county-routed legal aid on the result</li></ul></div>
+  <div class="card"><h3>Visual system</h3><ul>
+    <li>One accent drawn from the logo; cream and brown brand; Inter</li>
+    <li>Calm and professional, not a kids' app: money and dignity</li>
+    <li>Print stylesheet produces a clean two-page PDF</li></ul></div>
+  <div class="card"><h3>Accessibility + privacy</h3><ul>
+    <li>Labeled inputs, aria-live status, visible focus, screen-reader notes on external links</li>
+    <li>Worker initials only in organizer view; nothing stored, said on every page</li>
+    <li>Terms page in plain words: an estimate, not legal advice</li></ul></div>
 </div>
+<div class="band"><b>Tested</b> every button clicked end-to-end on the live site · sample flow with no network · camera and upload tested on a real phone · Spanish on every screen</div>
 </body></html>
