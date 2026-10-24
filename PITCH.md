@@ -1,6 +1,6 @@
 # Hayday — business description
 
-**Tagline:** One photo. Your pay, checked.
+**Tagline:** Make every payday a Hayday.
 
 ## The problem
 Farmworkers in California's Central Valley are among the lowest-paid workers in the state, and they are routinely shorted on their checks: unpaid hours, missing overtime, piece-rate work with no paid rest breaks, meal breaks never given and never compensated. Wage theft in agriculture is widely documented and almost never reported. The reasons are simple. The rules are complicated, pay stubs are confusing, the complaint forms are in English, and a worker who suspects a short check has no way to know for sure, let alone prove it.
