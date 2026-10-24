@@ -36,6 +36,7 @@ This is the frame every other page plugs into. See PLAN.md "Pages" and D-006 in 
 - [ ] Report back section below is filled in
 
 ## Constraints
+- Do not edit package.json or install packages (D-009). Needed dependency → Open item in your report.
 - Tailwind only. No shadcn or UI library install (saves time and avoids CLI prompts).
 - No images from the internet. Use an inline SVG or CSS-framed placeholder for the pay stub picture.
 - Do not touch `src/lib/rules/`, `src/lib/llm.ts`, or `src/app/api/` (other subrunners own them).

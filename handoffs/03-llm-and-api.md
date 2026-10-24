@@ -25,7 +25,7 @@ The AI does exactly two jobs (D-007). Extraction quality on bad photos is the ha
 2. **Pick and verify the model slug.** Fetch `https://openrouter.ai/api/v1/models` (public, no key) and choose a current Anthropic Claude model that supports image input. Put the exact slug as the `LLM_MODEL` value in `.env.example` and in ENGINEERING.md. Do not guess the slug.
 3. `src/app/api/extract/route.ts`: `POST` with JSON `{ image: string (base64, no data: prefix), mimeType: string }`. Limit 8 MB. Returns `PayStub`. Returns 400 on bad input, 500 with a safe message on failure.
 4. `src/app/api/claim-letter/route.ts`: `POST` with the `writeClaimLetter` input, returns `{ en, es }`.
-5. `scripts/llm-test.ts` and `"llm:test": "tsx scripts/llm-test.ts"` (install `tsx` as a dev dependency) that runs extraction on `public/samples/sample-1.png` if present, else on a tiny generated PNG, and prints the parsed fields. Works in DEMO_MODE too.
+5. `scripts/llm-test.ts` and `"llm:test": "tsx scripts/llm-test.ts"` that runs extraction on `public/samples/sample-1.png` if present, else on a tiny generated PNG, and prints the parsed fields. Works in DEMO_MODE too.
 6. `.env.example` updated. If Niki has provided a real key in `.env`, run `npm run llm:test` once against the real model and record the result in your report; if not, run it in DEMO_MODE and say so.
 
 ## Done when
@@ -38,6 +38,7 @@ The AI does exactly two jobs (D-007). Extraction quality on bad photos is the ha
 - [ ] Report back section below is filled in
 
 ## Constraints
+- Do not edit package.json or install packages (D-009). Needed dependency → Open item in your report.
 - Only `src/lib/llm.ts` imports the `openai` package.
 - Server-side only. Never expose the key to the client.
 - Do not touch `src/app/(pages)`, `src/lib/rules/` or `src/lib/i18n.ts`.

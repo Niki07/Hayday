@@ -21,7 +21,7 @@ This is the heart of the product and the thing judges will ask "how do you know?
 3. `src/lib/rules/index.ts`: `checkPayStub(stub: PayStub, answers: WorkerAnswers): CheckResult`. One file per rule under `src/lib/rules/checks/`, each exporting `(stub, answers, ctx) => Finding | null`. Rules: `min-wage`, `daily-ot`, `weekly-ot`, `piece-rest`, `meal-premium`, `rest-premium`, `stub-incomplete`, `math-mismatch`, `unpaid-hours`. Amount math must be shown in the explanation (e.g. "2 hours × $8.45 half-time premium = $16.90").
 4. Explanations in both languages, written for a reader with no legal background. Citations as short strings ("Cal. Labor Code § 226.2").
 5. `src/lib/fixtures/samples.ts`: five sample stubs, each with `id`, a short `label` (en/es), the `PayStub` fields, default `WorkerAnswers`, and `expectedFindings` ids and `expectedTotal`. Make them realistic for Central Valley farm work (grape harvest piece rate per tray, almond sweeping hourly, citrus by the bin, a correct stub, a stub with unpaid hours). Use fictional employer names. Sample 1 should be the piece-rate case used in the demo script with a total near $184.50 and findings `piece-rest`, `daily-ot`, `unpaid-hours`.
-6. `src/lib/rules/__tests__/rules.test.ts` with vitest: every rule has a positive and a negative case; every sample fixture produces exactly its expected findings and total. Add `"test": "vitest run"` to package.json scripts.
+6. `src/lib/rules/__tests__/rules.test.ts` with vitest: every rule has a positive and a negative case; every sample fixture produces exactly its expected findings and total. The `test` script already exists.
 
 ## Done when
 - [ ] `npm test` passes with all rules and all five fixtures covered
@@ -32,6 +32,7 @@ This is the heart of the product and the thing judges will ask "how do you know?
 - [ ] Report back section below is filled in
 
 ## Constraints
+- Do not edit package.json or install packages (D-009). Needed dependency → Open item in your report.
 - Pure TypeScript, no runtime dependencies beyond what is installed.
 - Keep rule logic simple and defensible. When the law has edge cases you cannot cover in the time, implement the common case and note the simplification in the finding's explanation and in ENGINEERING.md.
 - Do not touch `src/app/` or `src/lib/llm.ts`.

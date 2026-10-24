@@ -28,6 +28,7 @@ A worker can take a photo or upload a file, see "Reading your pay stub...", then
 - [ ] `npm run lint` passes; decisions logged; Report back filled in
 
 ## Constraints
+- Do not edit package.json or install packages (D-009). Needed dependency → Open item in your report.
 - Use the ui components from 01; do not restyle the shell.
 - Do not modify `src/lib/rules/` or `src/lib/llm.ts`; if you need a change, write it in your report as an Open item.
 

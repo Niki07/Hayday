@@ -24,6 +24,7 @@ Each of the five sample stubs renders at `/samples/[id]` as a realistic-looking 
 - [ ] `npm run lint` passes; decisions logged; Report back filled in
 
 ## Constraints
+- Do not edit package.json or install packages (D-009). Needed dependency → Open item in your report.
 - Fictional employers and names only. Nothing resembling a real company.
 - Do not modify `samples.ts` values (02 owns them); if a field is missing for rendering, report it.
 

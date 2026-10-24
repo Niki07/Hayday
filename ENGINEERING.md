@@ -98,3 +98,12 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: The product is called Hayday. Replaces the working name Pago Justo in PLAN.md and handoffs. Session storage key is `hayday-check`.
 - Why: Team choice. Short, memorable, English, farm-flavored, and a play on "payday".
 - Consequences / shortcuts: "Hay Day" is also the name of a well-known mobile farming game. Fine for a hackathon; would need a check before any real launch.
+
+## D-009 — package.json is frozen during wave 1; shared dev deps preinstalled
+- Date: 2026-10-24
+- Decided by: Fable 5.1 (planning)
+- Status: Accepted
+- Importance: Minor
+- Decision: `vitest`, `tsx`, `openai` and `zod` are installed and the `test` and `llm:test` scripts exist before any subrunner starts. Subrunners do not edit package.json or install packages; they log an Open item if they need one.
+- Why: Three sessions share this folder in parallel. package.json and the lockfile are the one file every task would otherwise touch, and concurrent npm installs corrupt them.
+- Consequences / shortcuts: Any new dependency requires a Fable decision.

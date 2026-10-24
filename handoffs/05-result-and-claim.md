@@ -35,6 +35,7 @@ The result page shows the headline amount and one card per finding with rule, pl
 - [ ] No horizontal scroll at 375px; `npm run lint` passes; decisions logged; Report back filled in
 
 ## Constraints
+- Do not edit package.json or install packages (D-009). Needed dependency → Open item in your report.
 - No new dependencies. No PDF library.
 - Do not modify rules or llm wrapper.
 
