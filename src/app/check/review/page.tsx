@@ -216,7 +216,12 @@ function ReviewForm({ stub, answers, imagePreview }: { stub: PayStub; answers?: 
           <p className="font-semibold">{t("review.unreadable")}</p>
         </div>
       ) : byHand ? (
-        <p className="mt-3 text-gray-600">{t("review.byHandIntro")}</p>
+        <>
+          <div className="mt-3 rounded-2xl border border-accent/30 bg-accent-soft p-4 text-gray-800">
+            {t("review.noStubNotice")}
+          </div>
+          <p className="mt-3 text-gray-600">{t("review.byHandIntro")}</p>
+        </>
       ) : (
         <p className="mt-3 text-gray-600">{t("review.intro")}</p>
       )}

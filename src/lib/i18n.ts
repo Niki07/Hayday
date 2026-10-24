@@ -193,6 +193,9 @@ const en = {
   "check.error.image": "We could not open that picture. Try another photo, or type the numbers yourself.",
   "check.retry": "Try again",
   "check.byHand": "Enter details by hand",
+  "check.noStub": "No pay stub? Enter what you know",
+  "check.noStub.note": "Your employer must give you a pay stub every payday. If you never got one, we can still check your pay from your hours and what you were paid.",
+  "review.noStubNotice": "No pay stub is itself a problem: California requires employers to give one with every paycheck (Labor Code § 226). Enter what you know and we will still check your pay. Your own notes, texts or photos of your hours count as evidence.",
 
   // Review page (handoff 04)
   "review.intro": "Check that Hayday read your pay stub correctly. Fix anything that is wrong.",
@@ -476,6 +479,9 @@ const es: Record<TKey, string> = {
     "No pudimos abrir esa imagen. Pruebe con otra foto o escriba los números usted mismo.",
   "check.retry": "Intentar de nuevo",
   "check.byHand": "Escribir los datos a mano",
+  "check.noStub": "¿No tiene talón de pago? Escriba lo que sabe",
+  "check.noStub.note": "Su empleador debe darle un talón de pago cada día de pago. Si nunca lo recibió, igual podemos revisar su pago con sus horas y lo que le pagaron.",
+  "review.noStubNotice": "No recibir talón de pago ya es un problema: California exige a los empleadores entregar uno con cada cheque (Código Laboral § 226). Escriba lo que sabe y revisaremos su pago de todos modos. Sus propias notas, mensajes o fotos de sus horas cuentan como evidencia.",
 
   "review.intro": "Verifique que Hayday leyó bien su talón de pago. Corrija lo que esté mal.",
   "review.byHandIntro":

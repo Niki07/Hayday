@@ -159,6 +159,12 @@ function UploadScreen() {
             onChange={onFile}
           />
           <p className="mt-4 text-sm text-gray-600">{t("check.tip")}</p>
+          <div className="mt-6 rounded-2xl border border-gray-200 bg-gray-50 p-4">
+            <Button size="lg" variant="secondary" className="w-full" onClick={byHand}>
+              {t("check.noStub")}
+            </Button>
+            <p className="mt-3 text-sm text-gray-600">{t("check.noStub.note")}</p>
+          </div>
           <p className="mt-6 text-center text-sm text-gray-500">{t("check.privacy")}</p>
         </>
       )}
