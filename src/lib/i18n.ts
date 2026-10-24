@@ -20,8 +20,8 @@ const en = {
   "lang.es": "ES",
   "footer.privacy": "We do not save your photo, your name or your pay stub.",
   "footer.terms": "Terms and privacy",
-  "footer.organizers": "For organizers",
-  "header.organizers": "Organizers",
+  "footer.organizers": "For supervisors",
+  "header.organizers": "Supervisors",
   "header.how": "How it works",
   "how.title": "How Hayday works",
   "how.intro": "Three steps, about two minutes, nothing saved.",
@@ -35,14 +35,14 @@ const en = {
   "how.privacy.body": "Nothing is stored. Your photo is sent once to be read and is not kept. Your name, numbers and letter exist only in your browser and disappear when you close the tab. There are no accounts and no tracking.",
   "how.accuracy.title": "How accurate is it",
   "how.accuracy.body": "It is an estimate. The rates come from the California Department of Industrial Relations and were verified on October 24, 2026. Where the law has exceptions we could not cover, the estimate stays on the low side. A free legal aid office can confirm the result.",
-  "how.organizers.title": "For organizers and legal aid",
-  "how.organizers.body": "The organizer view loads several stubs from one employer and shows which rules are broken, on how many stubs, and the estimated total, with the law cited on every line and a CSV export.",
+  "how.organizers.title": "For supervisors and legal aid",
+  "how.organizers.body": "The supervisor view loads several stubs from one employer and shows which rules are broken, on how many stubs, and the estimated total, with the law cited on every line and a CSV export.",
   "how.cta": "Check my pay stub",
   "how.rules": "See the rules we check",
 
-  "home.org.title": "Organizer or legal aid worker?",
+  "home.org.title": "Supervisor or legal aid worker?",
   "home.org.body": "Load several pay stubs from one employer and see which rules are broken, on how many stubs, and the estimated total owed.",
-  "home.org.cta": "Open the organizer view",
+  "home.org.cta": "Open the supervisor view",
   "terms.title": "Terms and privacy",
   "terms.intro": "Hayday is a free tool that helps farmworkers check a pay stub against California pay rules. Please read these short terms before relying on it.",
   "terms.s1.title": "We do not save your data",
@@ -315,7 +315,7 @@ const en = {
   "rules.stub-incomplete.body":
     "A pay stub must show the employer's name, the pay period dates, total hours, your pay rates, gross pay, deductions and net pay. We list what is missing so you can ask your employer for a complete stub.",
   // Organizer view (handoff 09, hidden page)
-  "org.title": "Organizer view",
+  "org.title": "Supervisor view",
   "org.intro": "Load pay stubs from one employer to see which pay rules are broken, on how many stubs, and the estimated total owed.",
   "org.privacy": "Nothing you upload is stored. Photos are read once and not saved, and this page forgets everything when you reload it.",
   "org.county": "County",
@@ -363,7 +363,7 @@ const en = {
   "org.exportCsv": "Export CSV",
   "org.print": "Print",
   "org.caveat":
-    "Organizer view checks the stub only. Rest-break pay assumes a 5-day week; overtime counts only hours over 40 a week. Daily overtime, missed breaks and unpaid hours are not counted. Real amounts are usually higher.",
+    "Supervisor view checks the stub only. Rest-break pay assumes a 5-day week; overtime counts only hours over 40 a week. Daily overtime, missed breaks and unpaid hours are not counted. Real amounts are usually higher.",
   "org.payType.unknown": "Unknown",
 } as const;
 
@@ -376,8 +376,8 @@ const es: Record<TKey, string> = {
   "lang.es": "ES",
   "footer.privacy": "No guardamos su foto, su nombre ni su talón de pago.",
   "footer.terms": "Términos y privacidad",
-  "footer.organizers": "Para organizadores",
-  "header.organizers": "Organizadores",
+  "footer.organizers": "Para supervisores",
+  "header.organizers": "Supervisores",
   "header.how": "Cómo funciona",
   "how.title": "Cómo funciona Hayday",
   "how.intro": "Tres pasos, unos dos minutos, nada se guarda.",
@@ -391,14 +391,14 @@ const es: Record<TKey, string> = {
   "how.privacy.body": "No se guarda nada. Su foto se envía una vez para leerla y no se conserva. Su nombre, sus números y su carta existen solo en su navegador y desaparecen al cerrar la pestaña. No hay cuentas ni rastreo.",
   "how.accuracy.title": "Qué tan exacto es",
   "how.accuracy.body": "Es un cálculo aproximado. Las tarifas vienen del Departamento de Relaciones Industriales de California y se verificaron el 24 de octubre de 2026. Donde la ley tiene excepciones que no pudimos cubrir, el cálculo se mantiene por lo bajo. Una oficina de ayuda legal gratuita puede confirmar el resultado.",
-  "how.organizers.title": "Para organizadores y ayuda legal",
-  "how.organizers.body": "La vista para organizadores carga varios talones de un mismo empleador y muestra qué reglas se incumplen, en cuántos talones y el total estimado, con la ley citada en cada línea y exportación a CSV.",
+  "how.organizers.title": "Para supervisores y ayuda legal",
+  "how.organizers.body": "La vista para supervisores carga varios talones de un mismo empleador y muestra qué reglas se incumplen, en cuántos talones y el total estimado, con la ley citada en cada línea y exportación a CSV.",
   "how.cta": "Revisar mi talón de pago",
   "how.rules": "Ver las reglas que revisamos",
 
-  "home.org.title": "¿Es organizador o trabaja en ayuda legal?",
+  "home.org.title": "¿Es supervisor o trabaja en ayuda legal?",
   "home.org.body": "Cargue varios talones de pago de un mismo empleador y vea qué reglas se incumplen, en cuántos talones y el total estimado que se debe.",
-  "home.org.cta": "Abrir la vista para organizadores",
+  "home.org.cta": "Abrir la vista para supervisores",
   "terms.title": "Términos y privacidad",
   "terms.intro": "Hayday es una herramienta gratuita que ayuda a los trabajadores del campo a revisar un talón de pago según las reglas de pago de California. Lea estos términos breves antes de confiar en el resultado.",
   "terms.s1.title": "No guardamos sus datos",
@@ -677,7 +677,7 @@ const es: Record<TKey, string> = {
   "rules.stub-incomplete.body":
     "Un talón de pago debe mostrar el nombre del empleador, las fechas del periodo, el total de horas, sus tarifas, el pago bruto, las deducciones y el pago neto. Listamos lo que falta para que pueda pedirle a su empleador un talón completo.",
   // Organizer view (handoff 09, hidden page)
-  "org.title": "Vista para organizadores",
+  "org.title": "Vista para supervisores",
   "org.intro": "Cargue talones de pago de un mismo empleador para ver qué reglas de pago no se cumplen, en cuántos talones, y el total aproximado que se debe.",
   "org.privacy": "No guardamos nada de lo que sube. Las fotos se leen una vez y no se guardan, y esta página lo olvida todo cuando la vuelve a cargar.",
   "org.county": "Condado",
@@ -725,7 +725,7 @@ const es: Record<TKey, string> = {
   "org.exportCsv": "Exportar CSV",
   "org.print": "Imprimir",
   "org.caveat":
-    "La vista para organizadores revisa solo el talón. El pago de descansos supone una semana de 5 días; el tiempo extra cuenta solo las horas después de 40 a la semana. No se cuentan el tiempo extra diario, los descansos no dados ni las horas que faltan. Las cantidades reales suelen ser más altas.",
+    "La vista para supervisores revisa solo el talón. El pago de descansos supone una semana de 5 días; el tiempo extra cuenta solo las horas después de 40 a la semana. No se cuentan el tiempo extra diario, los descansos no dados ni las horas que faltan. Las cantidades reales suelen ser más altas.",
   "org.payType.unknown": "Desconocido",
 };
 

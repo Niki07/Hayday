@@ -548,3 +548,12 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: `/how-it-works` explains the three steps (AI reads the photo, code checks the pay, the letter is written from verified numbers), privacy, accuracy and the organizer view, in both languages, with buttons to `/check` and `/rules`. The header now has a nav with "How it works" and "Organizers"; on phones it wraps to a second row under the logo, on wider screens it sits inline. Verified no horizontal overflow at 375 px in English and Spanish.
 - Why: Niki asked for a visible "how it works" tab; it is the first thing judges look for and it carries the AI-vs-code story.
 - Consequences / shortcuts: The phone header is now two rows tall (about 44 px more).
+
+## D-059 — "Organizer" renamed "Supervisor" in all visible text
+- Date: 2026-10-24
+- Decided by: Niki's team
+- Status: Accepted
+- Importance: Minor
+- Decision: Header link, page title, tab title, how-it-works section and the caveat now say Supervisor / Supervisores. The route stays `/organizer` and internal identifiers (`org.*` keys, `organizerAnswers`, fixtures) are unchanged.
+- Why: The second persona is a crew supervisor checking their own crew's stubs before payroll problems become claims; "supervisor" fits them and legal aid staff better than "organizer".
+- Consequences / shortcuts: PITCH.md and DEMO.md still say organizer in places; update before submission if time allows.
