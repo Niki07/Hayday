@@ -20,9 +20,9 @@ export default function PayStubIllustration() {
       className="h-auto w-full max-w-xs"
     >
       <rect x="2" y="2" width="316" height="216" rx="10" fill="#ffffff" stroke="#d1d5db" strokeWidth="2" />
-      <rect x="2" y="2" width="316" height="38" rx="10" fill="#ecf6ef" />
-      <rect x="2" y="30" width="316" height="10" fill="#ecf6ef" />
-      <text x="16" y="27" fontSize="14" fontWeight="700" fill="#166534">
+      <rect x="2" y="2" width="316" height="38" rx="10" fill="var(--color-accent-soft)" />
+      <rect x="2" y="30" width="316" height="10" fill="var(--color-accent-soft)" />
+      <text x="16" y="27" fontSize="14" fontWeight="700" fill="var(--color-accent)">
         {t("stub.title")}
       </text>
       <text x="16" y="60" fontSize="11" fill="#6b7280">
