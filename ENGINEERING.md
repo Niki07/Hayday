@@ -233,3 +233,75 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: Handoff 04 downscales images client-side to a 1600 px long edge, JPEG quality 0.85, before POSTing to `/api/extract`. This was already in the handoff; 03's analysis (Vercel 4.5 MB body limit, Anthropic 5 MB image limit, HEIC conversion) confirms it is required, not optional.
 - Why: Phone photos routinely exceed 3 MB. Downscaling also converts HEIC from iPhones to JPEG, which the API accepts.
 - Consequences / shortcuts: Review page must handle `payType: "unknown"` with `confidence: 0` by offering manual entry (03's note).
+
+## D-024 — Verified pay rates used by the rules engine
+- Date: 2026-10-24
+- Decided by: Opus (session: handoffs/02-rules-engine.md)
+- Status: Accepted
+- Importance: Major
+- Decision: `src/lib/rules/rates.ts` holds the California minimum wage $15.50 (2023), $16.00 (2024), $16.50 (2025), $16.90 (2026-01-01), the same for all employer sizes since 2023. Local ordinance table is empty. Farmworker overtime is 1.5x after 8 h/day or 40 h/week and 2x after 12 h/day.
+- Why: Verified online this session. Minimum wage: dir.ca.gov/dlse/faq_minimumwage.htm and dir.ca.gov/dlse/minimum_wage.htm. Local: the UC Berkeley Labor Center inventory (the list DIR links to) has 40 California localities, none in a Central Valley county. Overtime: dir.ca.gov/dlse/Overtime-for-Agricultural-Workers.html (8/40 and 2x after 12 for 26+ employees since 2022-01-01, for 25 or fewer since 2025-01-01). Matches PLAN.md; no contradiction to escalate.
+- Consequences / shortcuts: Employer size is not modeled. For 2024 periods a small employer's real threshold was 8.5/45, so 2024 overtime could be overstated for small employers. The 2027 rate is not published yet; add it when DIR announces it.
+
+## D-025 — Rounding: cents, half up, rates rounded before use
+- Date: 2026-10-24
+- Decided by: Opus (session: handoffs/02-rules-engine.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: The regular/average hourly rate is rounded to cents first, then each finding is computed from that rounded rate and rounded to cents (half up). `totalOwed` is the sum of the rounded findings.
+- Why: The explanation shows the arithmetic ("10 hours × $22.60 × 0.5 = $113.00"). Rounding the rate first makes every number on screen check out with a calculator. Rejected: full precision until the end, which gave answers a cent off from the shown math.
+- Consequences / shortcuts: Amounts can differ from a payroll system's by a cent or two per finding.
+
+## D-026 — Piece-rate average hourly rate
+- Date: 2026-10-24
+- Decided by: Opus (session: handoffs/02-rules-engine.md)
+- Status: Accepted
+- Importance: Major
+- Decision: Average hourly rate = straight earnings ÷ hours, where straight earnings = piece units × piece rate (else gross − overtime pay − rest-break pay) and hours = `hoursWorked` on the stub (else the worker's reported total). The same rate, floored at the minimum wage, is used for piece-rest pay, overtime premium, and meal/rest premiums.
+- Why: Labor Code § 226.2 divides pay for the week (excluding rest-break pay and overtime premium) by hours worked. Using stub hours keeps min-wage and unpaid-hours from double counting: min-wage covers recorded hours, unpaid-hours covers the extra ones at minimum wage. One rate everywhere keeps it explainable.
+- Consequences / shortcuts: § 226.2 excludes rest-break time from the hours. We do not, which slightly understates the rate and the amounts (conservative). The explanation says so.
+
+## D-027 — How stub fields are read (agreed with handoff 03's extractor)
+- Date: 2026-10-24
+- Decided by: Opus (session: handoffs/02-rules-engine.md)
+- Status: Accepted
+- Importance: Major
+- Decision: `hoursWorked` is total hours including overtime hours (as handoff 03's prompt says). On hourly stubs, regular pay = (hoursWorked − overtimeHours) × hourlyRate and the overtime premium already paid = overtimeHours × (overtimeRate − hourlyRate). On piece stubs, an overtime line counts entirely as premium, since piece pay already covers straight time. Overtime owed is computed from the worker's `dailyHours`. Paid premium offsets daily overtime first, then weekly.
+- Why: These are the most common stub layouts. A single definition stops 03, 04 and 02 from drifting.
+- Consequences / shortcuts: If the extractor returns regular-only hours in `hoursWorked`, unpaid-hours and math-mismatch will be off by the overtime hours. Overtime rules return nothing without `dailyHours`.
+
+## D-028 — Reading the break answers
+- Date: 2026-10-24
+- Decided by: Opus (session: handoffs/02-rules-engine.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: "some" means one missed day (the minimum we can be sure of): one premium hour, and for piece-rest the first qualifying day is left out. "no" means every qualifying day. Piece workers who answered "no" to rest breaks get rest-premium, not piece-rest (no break was taken, so there is no break time to pay). Meal break needed on days over 5 h. Rest breaks: none under 3.5 h, otherwise ceil((h − 2) ÷ 4) ten-minute breaks (one per 4 hours or major fraction).
+- Why: The worker answers yes/some/no once for the whole period. Counting one day for "some" never overstates, and the explanation tells the worker they may be owed more.
+- Consequences / shortcuts: Under-counts workers who missed most breaks but answered "some". Ignores the 6-hour meal waiver and second meal breaks after 10 hours.
+
+## D-029 — Rules engine simplifications and thresholds
+- Date: 2026-10-24
+- Decided by: Opus (session: handoffs/02-rules-engine.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: Minimum wage date = periodStart (else periodEnd, else newest rate). `dailyHours` are split into workweeks by pay period length (else 7 entries per week). Weekly overtime counts only the first 8 hours of each day. Unpaid hours need 15 minutes or more of difference; piece workers' unpaid hours are paid at the minimum wage (§ 226.2 nonproductive time), hourly at max(rate, minimum). math-mismatch tolerates $1.00, counts only shortfalls as owed, skips the gross check on mixed stubs, and cites § 226(a) (accurate statement) rather than nothing. stub-incomplete checks only the PLAN.md items, adds $0 and mentions the § 226(e) penalty without computing it. No seventh-day rule, no split-shift or reporting-time pay.
+- Why: These cover the common cases in the time available. Each choice errs toward the lower amount.
+- Consequences / shortcuts: All of the above can be refined after the hackathon. The employee name is not checked by stub-incomplete (extractors miss it often; not in PLAN.md's list).
+
+## D-030 — Sample stubs and the demo total ($184.47)
+- Date: 2026-10-24
+- Decided by: Opus (session: handoffs/02-rules-engine.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: `src/lib/fixtures/samples.ts` has five samples: `grape-trays` (demo: piece-rest $37.67 + daily-ot $113.00 + unpaid-hours $33.80 = $184.47), `almond-sweeping` ($103.70), `citrus-bins` ($152.90), `correct-stub` ($0), `unpaid-hours` ($80.00). Together they trigger all nine rules. Sample 1 uses 03's employer and worker names with new numbers (1142 trays at $0.95, 48 h on the stub, 5 × 10 h worked, Sept 14–20 2026).
+- Why: The handoff asked for "near $184.50". The amounts come from the real arithmetic, not from tuning to a round number. $184.47 is within the $1 the handoff allows.
+- Consequences / shortcuts: The demo script and slides should say $184.47. Handoff 03's `demo-stub.ts` should now return `samples[0].stub`; its current numbers (412 trays at $1.10) give a different result.
+
+## D-024 — vite installed as a dev dependency (addendum to D-015)
+- Date: 2026-10-24
+- Decided by: Fable 5.1 (planning)
+- Status: Accepted
+- Importance: Minor
+- Decision: `vite` is installed alongside `vitest@5`, which needs it as a peer, again with `--legacy-peer-deps`.
+- Why: `npm test` failed with "Cannot find package 'vite'" after D-015. With vite present the rules suite (48 tests) runs in about 150 ms.
+- Consequences / shortcuts: None beyond D-015.
