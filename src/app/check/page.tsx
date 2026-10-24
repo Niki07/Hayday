@@ -154,7 +154,7 @@ function UploadScreen() {
           <input
             ref={fileInput}
             type="file"
-            accept="image/*,application/pdf"
+            accept="image/*"
             className="hidden"
             onChange={onFile}
           />

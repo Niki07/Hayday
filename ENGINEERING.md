@@ -395,3 +395,12 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: County, rest breaks and meal breaks have no default when the stub came from a photo or by hand; "Check my pay" shows inline errors until they are answered (samples arrive with answers, so that path has no friction). Days worked is a 1–7 selector (default 5) with one hours input per day (default 8; each must be 1–24). "Paid by the piece" is pre-set from the pay type (piece or mixed = yes). Hourly fields (rate, overtime hours and rate) hide when the pay type is "piece" and the extractor found none, and piece fields hide for "hourly" likewise; a value the extractor did find always stays visible. I added overtime hours and rate fields to the handoff's list because `hoursWorked` handling in D-027 depends on them. Counties are stored as plain names ("Fresno", "San Joaquin") matching `samples.ts`; anything outside the eight Central Valley counties is stored as "Other". The form fields are strings until submit; the stub keeps the extractor's `rawText`, `deductions`, `employeeName`, `pieceUnitName` and `confidence`.
 - Why: A silent default of "yes" to rest/meal breaks would hide premiums the worker may be owed; asking costs one tap each and is demo step 4 anyway. Showing only relevant fields keeps the phone form short. Pay periods longer than 7 days are not supported, per the handoff ("up to 7 inputs").
 - Consequences / shortcuts: A biweekly pay period only captures one week of daily hours, so overtime on the second week is not checked. Changing the pay type does not re-sync "paid by the piece".
+
+## D-042 — PDFs are not accepted in the file picker (resolves handoff 04's open question)
+- Date: 2026-10-24
+- Decided by: Fable 5.1 (planning)
+- Status: Accepted
+- Importance: Minor
+- Decision: The "Upload a file" picker accepts images only. `/api/extract` keeps rejecting PDFs (D-020). A worker with a PDF stub takes a screenshot of it.
+- Why: Demo-first. PDF support needs page rendering or a model path that takes documents; not worth an hour today. Offering a format that always fails is worse than not offering it.
+- Consequences / shortcuts: Mention "screenshot your PDF" in the upload help text if time allows. Handoff 05's `stored-check.ts` can stay.
