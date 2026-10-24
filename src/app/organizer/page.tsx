@@ -7,6 +7,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
+import ExternalLink from "@/components/ui/ExternalLink";
+import Link from "next/link";
 import {
   ORGANIZER_SAMPLE_COUNTY,
   ORGANIZER_SAMPLE_EMPLOYER,
@@ -16,6 +18,7 @@ import { prepareFile } from "@/lib/image";
 import { useLanguage, useT, type TKey } from "@/lib/i18n";
 import { initials, periodLabel, summarize, toCsv, type OrganizerRow } from "@/lib/organizer";
 import { money } from "@/lib/rules/format";
+import { RULE_SOURCES } from "@/lib/rules/sources";
 import { checkStubOnly } from "@/lib/rules/organizer";
 import type { PayStub } from "@/lib/types";
 import "./print.css";
@@ -323,6 +326,14 @@ export default function OrganizerPage() {
                         {p.estimated && p.amount > 0 && <span className="ml-1 text-sm text-gray-500">{t("org.est")}</span>}
                       </span>
                     </div>
+                    {RULE_SOURCES[p.id] && (
+                      <p className="text-sm text-gray-600">
+                        {t("org.rule")}{" "}
+                        <ExternalLink href={RULE_SOURCES[p.id].url} className="font-medium text-accent underline underline-offset-4">
+                          {RULE_SOURCES[p.id].citation}
+                        </ExternalLink>
+                      </p>
+                    )}
                     <div className="h-2 w-full rounded-full bg-gray-100" aria-hidden>
                       <div
                         className="h-2 rounded-full bg-accent"
@@ -334,6 +345,9 @@ export default function OrganizerPage() {
               </ul>
             )}
             <p className="mt-4 rounded-xl bg-accent-soft p-3 text-sm text-gray-800">{t("org.caveat")}</p>
+            <Link href="/rules" className="org-no-print mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-accent underline underline-offset-4">
+              {t("org.howWeCheck")}
+            </Link>
           </section>
 
           <section className="mt-8">
