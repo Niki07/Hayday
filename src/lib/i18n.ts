@@ -24,8 +24,8 @@ const en = {
   "terms.intro": "Hayday is a free tool that helps farmworkers check a pay stub against California pay rules. Please read these short terms before relying on it.",
   "terms.s1.title": "We do not save your data",
   "terms.s1.body": "Your photo, your name and the numbers on your pay stub are used only while you are on this site. The photo is sent to an AI service to be read and is not stored by Hayday afterwards. Nothing is saved on our servers, and we do not create accounts or track you. If you close the tab, it is gone.",
-  "terms.s2.title": "This is guidance, not legal advice",
-  "terms.s2.body": "Hayday gives an estimate based on the numbers you enter and the rules we have programmed. It is not legal advice, it is not a legal decision, and it is not legally binding on you or on your employer. Only a court or the California Labor Commissioner can decide what you are owed. Use the result as a starting point for a conversation with a free legal aid office.",
+  "terms.s2.title": "The result is an estimate, not a guarantee",
+  "terms.s2.body": "Hayday is not 100% accurate. The amount it shows is an estimate, based only on the numbers you entered and the rules we were able to program. The real amount you are owed could be higher or lower, and some situations are not covered at all. Treat the result as a helpful starting point, not a final answer, and have a free legal aid office or the California Labor Commissioner confirm it. Hayday does not give legal advice."
   "terms.s3.title": "Accuracy and limits",
   "terms.s3.body": "We check the most common problems: minimum wage, daily and weekly overtime, paid rest breaks for piece-rate work, missed meal and rest breaks, missing hours and missing information on the stub. Rates come from the California Department of Industrial Relations. Where the law has exceptions we could not cover, the estimate is kept on the low side. The AI may misread a photo, so always check the numbers on the review screen.",
   "terms.s4.title": "Your rights",
@@ -257,8 +257,8 @@ const es: Record<TKey, string> = {
   "terms.intro": "Hayday es una herramienta gratuita que ayuda a los trabajadores del campo a revisar un talón de pago según las reglas de pago de California. Lea estos términos breves antes de confiar en el resultado.",
   "terms.s1.title": "No guardamos sus datos",
   "terms.s1.body": "Su foto, su nombre y los números de su talón de pago se usan solo mientras está en este sitio. La foto se envía a un servicio de inteligencia artificial para leerla y Hayday no la guarda después. No se guarda nada en nuestros servidores, no creamos cuentas y no lo rastreamos. Si cierra la pestaña, todo desaparece.",
-  "terms.s2.title": "Esto es orientación, no asesoría legal",
-  "terms.s2.body": "Hayday da un cálculo aproximado basado en los números que usted ingresa y las reglas que hemos programado. No es asesoría legal, no es una decisión legal y no obliga legalmente ni a usted ni a su empleador. Solo un tribunal o el Comisionado del Trabajo de California puede decidir lo que se le debe. Use el resultado como punto de partida para hablar con una oficina de ayuda legal gratuita.",
+  "terms.s2.title": "El resultado es un cálculo aproximado, no una garantía",
+  "terms.s2.body": "Hayday no es 100% exacto. La cantidad que muestra es un cálculo aproximado, basado solo en los números que usted ingresó y en las reglas que pudimos programar. La cantidad real que se le debe puede ser mayor o menor, y algunas situaciones no están cubiertas. Tome el resultado como un punto de partida útil, no como una respuesta final, y pida a una oficina de ayuda legal gratuita o al Comisionado del Trabajo de California que lo confirme. Hayday no da asesoría legal."
   "terms.s3.title": "Exactitud y límites",
   "terms.s3.body": "Revisamos los problemas más comunes: salario mínimo, horas extra diarias y semanales, descansos pagados en el trabajo a destajo, descansos y comidas no otorgados, horas que faltan y datos que faltan en el talón. Las tarifas vienen del Departamento de Relaciones Industriales de California. Donde la ley tiene excepciones que no pudimos cubrir, el cálculo se mantiene por lo bajo. La inteligencia artificial puede leer mal una foto, así que siempre revise los números en la pantalla de revisión.",
   "terms.s4.title": "Sus derechos",
