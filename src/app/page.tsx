@@ -48,16 +48,6 @@ export default function Home() {
       </section>
 
       <section>
-        <Card className="flex flex-col gap-3 border-accent/30 bg-accent-soft">
-          <h2 className="text-lg font-semibold text-gray-900">{t("home.org.title")}</h2>
-          <p className="text-gray-700">{t("home.org.body")}</p>
-          <Button href="/organizer" variant="secondary" size="md" className="w-full sm:w-auto">
-            {t("home.org.cta")}
-          </Button>
-        </Card>
-      </section>
-
-      <section>
         <figure className="flex flex-col items-center gap-3 rounded-2xl bg-gray-50 p-5">
           <PayStubIllustration />
           <figcaption className="text-center text-sm text-gray-600">
