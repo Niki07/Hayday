@@ -404,3 +404,12 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: The "Upload a file" picker accepts images only. `/api/extract` keeps rejecting PDFs (D-020). A worker with a PDF stub takes a screenshot of it.
 - Why: Demo-first. PDF support needs page rendering or a model path that takes documents; not worth an hour today. Offering a format that always fails is worse than not offering it.
 - Consequences / shortcuts: Mention "screenshot your PDF" in the upload help text if time allows. Handoff 05's `stored-check.ts` can stay.
+
+## D-043 — `.npmrc` sets legacy-peer-deps for every install, including Vercel's
+- Date: 2026-10-24
+- Decided by: Fable 5.1 (planning)
+- Status: Accepted
+- Importance: Minor
+- Decision: `.npmrc` at the root with `legacy-peer-deps=true`, so `npm install` on Vercel (and any fresh clone) succeeds despite the vitest/vite peer range conflict (D-015, D-031).
+- Why: First production deploy failed at `npm install`. Project is deployed in `DEMO_MODE=true` first; the API key is added by Niki and the flag flipped to `false` afterwards.
+- Consequences / shortcuts: Peer warnings are hidden project-wide. Fine for a hackathon.
