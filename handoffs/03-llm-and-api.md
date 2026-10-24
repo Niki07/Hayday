@@ -82,6 +82,7 @@ The AI does exactly two jobs (D-007). Extraction quality on bad photos is the ha
   - `/api/extract` errors have the shape `{ error: "bad_request" | "too_large" | "not_configured" | "extract_failed", message }`. On `payType: "unknown"` with `confidence: 0`, send the worker to manual entry on the review page.
   - Live extraction takes 7–15 s, so show a progress state.
   - `/api/claim-letter` never fails for AI reasons; it falls back to the template letter. It only returns 400 on a bad body or 500 on missing config.
+- D-021 follow-up done (2026-10-24): DEMO_MODE extraction now returns `structuredClone(samples[0].stub)` (`grape-trays`), and `demo-stub.ts` is deleted. `DEMO_MODE=true npm run llm:test -- --letter` and `npm run lint` both pass.
 - How to verify:
   - `DEMO_MODE=true npm run llm:test -- --letter` (no network)
   - `npm run llm:test -- path/to/stub.png --letter` (live, costs a few cents)

@@ -7,7 +7,7 @@ import OpenAI from "openai";
 import type { ChatCompletionMessageParam } from "openai/resources/chat/completions";
 import { z } from "zod";
 import type { PayStub } from "@/lib/types";
-import { demoStub } from "@/lib/fixtures/demo-stub";
+import { samples } from "@/lib/fixtures/samples";
 import { buildTemplateLetter, formatUsd, type ClaimLetter, type ClaimLetterInput } from "@/lib/fixtures/letters";
 
 export type { ClaimLetter, ClaimLetterInput } from "@/lib/fixtures/letters";
@@ -233,7 +233,7 @@ function replyText(completion: OpenAI.Chat.Completions.ChatCompletion): { text: 
 export async function extractPayStub(imageBase64: string, mimeType: string): Promise<PayStub> {
   if (isDemoMode()) {
     await sleep(DEMO_EXTRACT_DELAY_MS);
-    return structuredClone(demoStub);
+    return structuredClone(samples[0].stub);
   }
   const { client, model } = getClient();
 
