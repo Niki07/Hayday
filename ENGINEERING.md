@@ -440,3 +440,39 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: The "Your privacy" card on the home page is removed (the footer already says it). A `/terms` page, linked from the footer as "Terms and privacy", states in plain English and Spanish: no data is saved; results are guidance, not legal advice, and not legally binding on the worker or the employer; what is checked and where rates come from; that retaliation is illegal and claims are free and do not require immigration papers; that this is a one-day hackathon prototype.
 - Why: Niki's feedback; judges and legal aid partners will look for exactly this disclaimer.
 - Consequences / shortcuts: The rights paragraph is general public guidance, not tailored advice; wording should be reviewed by a legal aid organization before any real launch.
+
+## D-047 — Law link URLs: how they were verified, and the § 226.7 quirk
+- Date: 2026-10-24
+- Decided by: Sonnet (session: handoffs/08-trust-batch.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: `src/lib/rules/sources.ts` links Labor Code sections to `leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=N`, Wage Order 14 to `dir.ca.gov/IWC/IWCArticle14.pdf` (DIR's index lists it as #14-2001), minimum wage to `dir.ca.gov/dlse/minimum_wage.htm`, and farm overtime to `dir.ca.gov/dlse/Overtime-for-Agricultural-Workers.html`. The three dir.ca.gov URLs returned 200 with curl today. leginfo sits behind a Cloudflare browser challenge, so curl gets 403 for every URL on the host, including its home page; that says nothing about our links. Instead each section was opened in the built-in browser and showed the right statute text: 226, 226.2, 512, 857 (Chapter 6, Agriculture), 1182.12, 1194. Section 226.7 has two versions, so leginfo lands on a "pick a version" page (Amended 2020 Ch. 343 Sec. 2, and the newer one); there is no deep link around it.
+- Why: Handoff said curl every URL and confirm 200. For leginfo that is impossible, so a real browser was the honest check. Rejected for 226.7: Justia (also 403, and unofficial) and the 200 KB chapter page (the section is buried in it).
+- Consequences / shortcuts: The § 226.7 citation links to leginfo's version picker; the worker picks the newest entry. The rules page labels the 226.7 link "pick the newest version". No Open item: every citation string has a URL.
+
+## D-048 — Trust batch UI choices (result strip, home line, county help)
+- Date: 2026-10-24
+- Decided by: Sonnet (session: handoffs/08-trust-batch.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: (1) "Checked against California law" strip sits directly under the headline in both states, a `<details>` that is open from 640 px up and closed on phones, and always open in the green state. In the green state it replaces the old ✓ checklist, which listed the same rules without links. (2) The home trust line also names § 1182.12, because the minimum-wage check cites it; the handoff's sentence listed only 226, 226.2, 226.7, 512, 857 and 1194. (3) `effective` in `sources.ts` is set only where verified in `rates.ts`: minimum wage 2026-01-01 and farm overtime 2025-01-01 (fully phased in; the 2022 date for larger employers is in the explanation). Statute sections have no `effective` because no amendment date was verified. (4) The result page keeps the disclaimer line, adds a note that pay rules are the same in every county, shows the county's entries (statewide CRLA and Central California Legal Services with no office line for "Other"), then the claim button, plus a small "See all legal aid offices" link to `/help` so the old route stays reachable. Kings County keeps its "nearest offices" note. (5) `result.rule.*` i18n keys are now unused by the result page; left in place (append-only).
+- Why: (2) the home line should not claim fewer laws than the app checks. (3) never publish a date we did not verify. (4) the generic help button went away, so a link to the full list keeps `/help` one tap from the result.
+- Consequences / shortcuts: For "Other California county" the statewide organizations are Central Valley focused; no better statewide list was verified. The county note on the result page and the `/rules` intro are the only statements about county scope.
+
+## D-049 — New test file for sources.ts; unpaid-hours citation in the table
+- Date: 2026-10-24
+- Decided by: Sonnet (session: handoffs/08-trust-batch.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: Added `src/lib/rules/__tests__/sources.test.ts` (no existing test or rule logic changed). It checks that `RULE_SOURCES` has the same ids in the same order as `RULES`, that `citationUrl` links the first section of each citation format, and that for every finding the five samples produce, `citationUrl(finding.citation)` equals its rule's `url`. The `unpaid-hours` table citation is the piece-rate form "§§ 1194, 226.2"; the hourly check emits "§ 1194", and both link to § 1194.
+- Why: Without it, a changed citation string in a check would silently lose its link. The strip shows one citation per rule, so the broader form is shown.
+- Consequences / shortcuts: Test count went from 48 to 52.
+
+## D-050 — Answers to handoff 08 open questions
+- Date: 2026-10-24
+- Decided by: Fable 5.1 (planning)
+- Status: Accepted
+- Importance: Minor
+- Decision: (1) The § 226.7 link landing on leginfo's version picker is acceptable; the link label already says to pick the newest version. (2) Keep § 1182.12 in the home trust line; it is the minimum wage section and belongs there. (3) The statewide pair for "Other California county" stays as is; CRLA serves rural California statewide.
+- Why: None of the three affects the demo; time goes to the recording and slides.
+- Consequences / shortcuts: A legal aid reviewer may want a better statewide list later.

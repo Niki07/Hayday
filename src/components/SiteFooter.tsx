@@ -19,6 +19,12 @@ export default function SiteFooter() {
             {t("footer.help")}
           </Link>
           <Link
+            href="/rules"
+            className="inline-flex min-h-11 items-center font-semibold text-accent underline underline-offset-4"
+          >
+            {t("footer.rules")}
+          </Link>
+          <Link
             href="/terms"
             className="inline-flex min-h-11 items-center font-semibold text-accent underline underline-offset-4"
           >

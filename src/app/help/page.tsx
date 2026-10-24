@@ -3,87 +3,8 @@
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import PageContainer from "@/components/ui/PageContainer";
-import { useT, type TKey } from "@/lib/i18n";
-
-// Verified 2026-10-24 against each organization's own site:
-//  - crla.org/locations lists offices in Fresno, Delano, Lamont, Madera, Modesto,
-//    Stockton and Tulare; crla.org lists Employment as a help area.
-//  - centralcallegal.org lists offices in Fresno, Merced and Visalia.
-//  - dir.ca.gov/dlse/HowToFileWageClaim.htm is the Labor Commissioner claim page.
-// No phone numbers on purpose: they change and could not all be verified.
-const CRLA = {
-  nameKey: "help.crla.name",
-  descKey: "help.crla.desc",
-  url: "https://crla.org/locations",
-} as const;
-const CCLS = {
-  nameKey: "help.ccls.name",
-  descKey: "help.ccls.desc",
-  url: "https://centralcallegal.org",
-} as const;
-
-type Entry = {
-  nameKey: TKey;
-  descKey: TKey;
-  officeKey: TKey;
-  url: string;
-};
-
-type County = { id: string; nameKey: TKey; nearby?: boolean; entries: Entry[] };
-
-const counties: County[] = [
-  {
-    id: "fresno",
-    nameKey: "county.fresno",
-    entries: [
-      { ...CRLA, officeKey: "help.office.fresno" },
-      { ...CCLS, officeKey: "help.office.fresno" },
-    ],
-  },
-  {
-    id: "kern",
-    nameKey: "county.kern",
-    entries: [{ ...CRLA, officeKey: "help.office.delano" }],
-  },
-  {
-    id: "tulare",
-    nameKey: "county.tulare",
-    entries: [
-      { ...CRLA, officeKey: "help.office.tulare" },
-      { ...CCLS, officeKey: "help.office.visalia" },
-    ],
-  },
-  {
-    // No Kings County office could be verified, so show the nearest ones (Tulare County).
-    id: "kings",
-    nameKey: "county.kings",
-    nearby: true,
-    entries: [
-      { ...CRLA, officeKey: "help.office.tulare" },
-      { ...CCLS, officeKey: "help.office.visalia" },
-    ],
-  },
-  {
-    id: "madera",
-    nameKey: "county.madera",
-    entries: [{ ...CRLA, officeKey: "help.office.madera" }],
-  },
-  {
-    id: "merced",
-    nameKey: "county.merced",
-    entries: [{ ...CCLS, officeKey: "help.office.merced" }],
-  },
-  {
-    id: "stanislaus",
-    nameKey: "county.stanislaus",
-    entries: [{ ...CRLA, officeKey: "help.office.modesto" }],
-  },
-  {
-    id: "sanjoaquin",
-    nameKey: "county.sanjoaquin",
-    entries: [{ ...CRLA, officeKey: "help.office.stockton" }],
-  },
-];
+import { counties } from "@/lib/help-data";
+import { useT } from "@/lib/i18n";
 
 export default function HelpPage() {
   const t = useT();
@@ -116,7 +37,7 @@ export default function HelpPage() {
           {c.entries.map((e) => (
             <Card key={`${c.id}-${e.nameKey}`}>
               <h3 className="text-base font-semibold text-gray-900">{t(e.nameKey)}</h3>
-              <p className="mt-0.5 text-sm font-medium text-accent">{t(e.officeKey)}</p>
+              {e.officeKey && <p className="mt-0.5 text-sm font-medium text-accent">{t(e.officeKey)}</p>}
               <p className="mt-1 text-gray-700">{t(e.descKey)}</p>
               <Button href={e.url} variant="secondary" size="md" className="mt-3 w-full">
                 {t("help.visit")}

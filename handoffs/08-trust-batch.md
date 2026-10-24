@@ -53,9 +53,24 @@ Niki's feedback: "it should be more obvious that we are using real laws and regu
 - A citation string with no official URL: log Open, render text only
 
 ## Report back (filled in by the subrunner)
-- Status:
+- Status: Done. `npm run lint`, `npx tsc --noEmit`, `npm test` (52 tests) and `npm run build` all pass. Nothing committed.
 - What was built:
+  - `src/lib/rules/sources.ts`: `RULE_SOURCES` (title, citation, url, extra links, effective, notCovered, en/es), `RATE_SOURCE`, `citationUrl()`, `formatLongDate()`.
+  - `src/lib/help-data.ts`: `counties`, `statewideHelp`, `getCountyHelp()`; `/help` imports it and renders the same 8 counties and 11 cards.
+  - `src/components/check/LawStrip.tsx` ("Checked against California law", 9 linked citations, DIR rate line, "How we check" link to `/rules`), shown under the headline in both result states; `src/components/ui/ExternalLink.tsx` (new tab, ↗ glyph, screen-reader note).
+  - Finding cards: "Rule: …" is a link via `citationUrl`. The printed claim table stays text.
+  - `/rules` page (both languages, one block per rule, rate table, thresholds, "Not covered yet"), footer link, home trust line.
+  - Result page: "Free legal help in {County}" with the county's organizations, statewide pair for "Other", county-scope note, claim button, "See all legal aid offices".
+  - 32 keys per language in `i18n.ts` (prefixes `rules.`, `trust.`, `result.law.`, `footer.rules`), English and Spanish, appended.
+  - New test file `src/lib/rules/__tests__/sources.test.ts` (4 tests).
 - What was NOT done and why:
-- Decisions logged: D-___
+  - leginfo URLs could not be confirmed with curl (Cloudflare challenge returns 403 for the whole host). Confirmed in the built-in browser instead: 226, 226.2, 512, 857, 1182.12, 1194 show the right statute. 226.7 opens leginfo's version picker (D-047). The three dir.ca.gov URLs returned 200 with curl.
+  - Could not click through a citation to a second tab in the (hidden) browser pane; the link has `target="_blank"` and the exact href loaded when navigated to directly.
+  - No per-statute `effective` dates (none verified); only min wage 2026-01-01 and farm overtime 2025-01-01.
+  - Not tested on a real phone or in Safari; mobile checked with the 375 px emulation (strip closed, no horizontal scroll).
+- Decisions logged: D-047, D-048, D-049
 - Open questions for Fable:
-- How to verify:
+  - Is the version-picker landing for § 226.7 acceptable, or should it link to something else (e.g. Wage Order 14 section on rest breaks)?
+  - Do you want the home trust line to name § 1182.12 (I added it, D-048) or keep the handoff's original list?
+  - For "Other California county" the statewide pair are Central Valley organizations; do you have a better statewide list?
+- How to verify: `/check?sample=1`, pick the grape sample, press "Check my pay": strip with 9 links, three linked card citations, "Free legal help in Fresno County". Repeat with the "everything correct" sample (strip open, green). Change county to "Other California county" on the review page for the statewide pair. Open `/rules` (footer link) and `/`.

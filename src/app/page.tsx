@@ -4,10 +4,13 @@ import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import PageContainer from "@/components/ui/PageContainer";
 import PayStubIllustration from "@/components/PayStubIllustration";
-import { useT } from "@/lib/i18n";
+import Link from "next/link";
+import { useLanguage, useT } from "@/lib/i18n";
+import { RATE_SOURCE, formatLongDate } from "@/lib/rules/sources";
 
 export default function Home() {
   const t = useT();
+  const { lang } = useLanguage();
   const checks = ["home.checks.1", "home.checks.2", "home.checks.3"] as const;
 
   return (
@@ -17,6 +20,12 @@ export default function Home() {
           {t("home.headline")}
         </h1>
         <p className="text-lg leading-7 text-gray-600">{t("home.subline")}</p>
+        <p className="text-sm leading-6 text-gray-500">
+          {t("trust.line").replace("{date}", formatLongDate(RATE_SOURCE.verifiedOn, lang))}{" "}
+          <Link href="/rules" className="font-semibold text-accent underline underline-offset-4">
+            {t("trust.link")}
+          </Link>
+        </p>
         <div className="mt-2 flex flex-col gap-3">
           <Button href="/check" className="w-full">
             {t("home.cta")}

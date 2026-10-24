@@ -242,6 +242,52 @@ const en = {
   "review.errorHours": "Enter between 1 and 24 hours for each day.",
   "review.errorAnswer": "Please choose an answer.",
   "review.errorSummary": "Please fix the items marked above.",
+
+  // Trust batch (handoff 08): the real law, visibly
+  "footer.rules": "The rules we check",
+  "trust.line":
+    "Checks your stub against California Labor Code sections 226, 226.2, 226.7, 512, 857, 1182.12 and 1194, and Wage Order 14. Rates verified with the state on {date}.",
+  "trust.link": "The rules we check",
+  "result.law.title": "Checked against California law",
+  "result.law.rates": "Rates from the California Department of Industrial Relations, verified {date}",
+  "result.law.how": "How we check",
+  "result.law.opens": "(opens in a new tab)",
+  "result.law.helpTitle": "Free legal help in {county}",
+  "result.law.helpTitleState": "Free legal help in California",
+  "result.law.countyNote":
+    "California pay rules are the same in every county. We use your county only to show help near you.",
+  "result.law.allHelp": "See all legal aid offices",
+  "rules.title": "The rules we check",
+  "rules.intro":
+    "Every check Hayday runs comes from a California law you can read yourself. These pay rules are the same across the whole state. In the Central Valley counties we cover, no city or county sets its own minimum wage. We use your county only to show you free legal help near you, never to change a pay rule.",
+  "rules.verified": "Rates were verified on the California Department of Industrial Relations website on {date}. Hayday gives estimates, not legal advice.",
+  "rules.law": "Read the law",
+  "rules.more": "More from the State",
+  "rules.effective": "In effect since {date}",
+  "rules.notCovered": "Not covered yet",
+  "rules.wage.title": "State minimum wage, per hour",
+  "rules.wage.row": "From {date}: {rate}",
+  "rules.threshold.daily": "1.5 times your regular rate after {a} hours in a day, double after {b} hours.",
+  "rules.threshold.weekly": "1.5 times your regular rate after {a} hours in a week.",
+  "rules.cta": "Check my pay stub",
+  "rules.min-wage.body":
+    "Every hour you work must pay at least the California minimum wage, even if you are paid by the piece. The rate is the same for all employers across the state, and the rate that counts is the one in effect on the days you worked.",
+  "rules.daily-ot.body":
+    "Farmworkers get 1.5 times their regular rate for hours over 8 in a day, and double their regular rate for hours over 12. Your straight pay is already on the stub, so we look for the missing extra part.",
+  "rules.weekly-ot.body":
+    "Hours over 40 in a week are also paid at 1.5 times the regular rate. Hours already counted as daily overtime are not counted twice.",
+  "rules.piece-rest.body":
+    "If you are paid by the piece, your 10-minute rest breaks must be paid separately, at your average hourly rate, on top of your piece pay.",
+  "rules.meal-premium.body":
+    "If you work more than 5 hours in a day, you must get a 30-minute meal break. For each day a meal break is missed, your employer owes you one extra hour of pay.",
+  "rules.rest-premium.body":
+    "You must get a paid 10-minute rest break for every 4 hours you work. For each day the rest breaks are missed, your employer owes you one extra hour of pay.",
+  "rules.unpaid-hours.body":
+    "Every hour you work must be paid. If you tell us you worked more hours than the stub shows, the missing hours are owed at your regular rate, and never less than the minimum wage. For piece-rate work, time that piece pay does not cover must be paid at least at the minimum wage.",
+  "rules.math-mismatch.body":
+    "A pay stub must be accurate. Hours times rate, plus overtime, minus deductions, should match the gross and net pay shown. We point out differences of more than $1.",
+  "rules.stub-incomplete.body":
+    "A pay stub must show the employer's name, the pay period dates, total hours, your pay rates, gross pay, deductions and net pay. We list what is missing so you can ask your employer for a complete stub.",
 } as const;
 
 export type TKey = keyof typeof en;
@@ -481,6 +527,52 @@ const es: Record<TKey, string> = {
   "review.errorHours": "Escriba entre 1 y 24 horas para cada día.",
   "review.errorAnswer": "Por favor elija una respuesta.",
   "review.errorSummary": "Por favor corrija lo marcado arriba.",
+
+  // Trust batch (handoff 08): the real law, visibly
+  "footer.rules": "Las reglas que revisamos",
+  "trust.line":
+    "Revisa su talón con las secciones 226, 226.2, 226.7, 512, 857, 1182.12 y 1194 del Código Laboral de California y la Orden de Salarios 14. Tarifas verificadas con el Estado el {date}.",
+  "trust.link": "Las reglas que revisamos",
+  "result.law.title": "Revisado con la ley de California",
+  "result.law.rates": "Tarifas del Departamento de Relaciones Industriales de California, verificadas el {date}",
+  "result.law.how": "Cómo revisamos",
+  "result.law.opens": "(se abre en otra pestaña)",
+  "result.law.helpTitle": "Ayuda legal gratis en el {county}",
+  "result.law.helpTitleState": "Ayuda legal gratis en California",
+  "result.law.countyNote":
+    "Las reglas de pago de California son las mismas en todos los condados. Usamos su condado solo para mostrarle ayuda cerca de usted.",
+  "result.law.allHelp": "Ver todas las oficinas de ayuda legal",
+  "rules.title": "Las reglas que revisamos",
+  "rules.intro":
+    "Cada revisión que hace Hayday viene de una ley de California que usted puede leer. Estas reglas de pago son las mismas en todo el estado. En los condados del Valle Central que cubrimos, ninguna ciudad ni condado fija su propio salario mínimo. Usamos su condado solo para mostrarle ayuda legal gratis cerca de usted, nunca para cambiar una regla de pago.",
+  "rules.verified": "Las tarifas se verificaron en el sitio del Departamento de Relaciones Industriales de California el {date}. Hayday da cálculos aproximados, no asesoría legal.",
+  "rules.law": "Leer la ley",
+  "rules.more": "Más del Estado",
+  "rules.effective": "En vigor desde el {date}",
+  "rules.notCovered": "Todavía no cubrimos",
+  "rules.wage.title": "Salario mínimo del Estado, por hora",
+  "rules.wage.row": "Desde el {date}: {rate}",
+  "rules.threshold.daily": "1.5 veces su pago normal después de {a} horas en un día, el doble después de {b} horas.",
+  "rules.threshold.weekly": "1.5 veces su pago normal después de {a} horas en una semana.",
+  "rules.cta": "Revisar mi talón de pago",
+  "rules.min-wage.body":
+    "Cada hora que trabaja debe pagarse al menos al salario mínimo de California, aunque le paguen por pieza. La tarifa es la misma para todos los empleadores del estado, y cuenta la que estaba en vigor en los días que usted trabajó.",
+  "rules.daily-ot.body":
+    "Los trabajadores agrícolas reciben 1.5 veces su pago normal por las horas después de 8 en un día, y el doble por las horas después de 12. Su pago normal ya está en el talón, así que buscamos la parte extra que falta.",
+  "rules.weekly-ot.body":
+    "Las horas después de 40 en una semana también se pagan a 1.5 veces el pago normal. Las horas que ya se contaron como horas extra del día no se cuentan dos veces.",
+  "rules.piece-rest.body":
+    "Si le pagan por pieza, sus descansos de 10 minutos deben pagarse aparte, a su pago promedio por hora, además de su pago por pieza.",
+  "rules.meal-premium.body":
+    "Si trabaja más de 5 horas en un día, debe tener una comida de 30 minutos. Por cada día que no le den la comida, su empleador le debe una hora extra de pago.",
+  "rules.rest-premium.body":
+    "Debe tener un descanso pagado de 10 minutos por cada 4 horas que trabaje. Por cada día que no le den los descansos, su empleador le debe una hora extra de pago.",
+  "rules.unpaid-hours.body":
+    "Cada hora que trabaja debe pagarse. Si nos dice que trabajó más horas de las que muestra el talón, las horas que faltan se deben a su pago normal, y nunca por menos del salario mínimo. En el trabajo a destajo, el tiempo que el pago por pieza no cubre debe pagarse al menos al salario mínimo.",
+  "rules.math-mismatch.body":
+    "Un talón de pago debe ser exacto. Las horas por la tarifa, más las horas extra, menos las deducciones, deben coincidir con el pago bruto y neto. Avisamos de diferencias de más de $1.",
+  "rules.stub-incomplete.body":
+    "Un talón de pago debe mostrar el nombre del empleador, las fechas del periodo, el total de horas, sus tarifas, el pago bruto, las deducciones y el pago neto. Listamos lo que falta para que pueda pedirle a su empleador un talón completo.",
 };
 
 export const dictionary: Record<Lang, Record<TKey, string>> = { en, es };

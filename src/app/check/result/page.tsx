@@ -1,12 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import PageContainer from "@/components/ui/PageContainer";
-import { dictionary, useLanguage, useT, type TKey } from "@/lib/i18n";
+import LawStrip from "@/components/check/LawStrip";
+import ExternalLink from "@/components/ui/ExternalLink";
+import { useLanguage, useT, type TKey } from "@/lib/i18n";
 import { formatUsd } from "@/lib/fixtures/letters";
 import { useCheck } from "@/lib/check-state";
+import { getCountyHelp, statewideHelp } from "@/lib/help-data";
+import { citationUrl } from "@/lib/rules/sources";
 import type { Finding } from "@/lib/types";
 
 const LABOR_COMMISSIONER_URL = "https://www.dir.ca.gov/dlse/HowToFileWageClaim.htm";
@@ -30,6 +35,7 @@ function SeverityTag({ severity }: { severity: Finding["severity"] }) {
 function FindingCard({ finding, small = false }: { finding: Finding; small?: boolean }) {
   const t = useT();
   const { lang } = useLanguage();
+  const lawUrl = citationUrl(finding.citation);
   return (
     <Card className={small ? "p-4" : ""}>
       <div className="flex items-start justify-between gap-4">
@@ -47,7 +53,8 @@ function FindingCard({ finding, small = false }: { finding: Finding; small?: boo
       </div>
       <p className="mt-3 leading-relaxed text-gray-700">{finding.explanation[lang]}</p>
       <p className="mt-3 text-sm text-gray-500">
-        {t("result.rule")}: {finding.citation}
+        {t("result.rule")}:{" "}
+        {lawUrl ? <ExternalLink href={lawUrl}>{finding.citation}</ExternalLink> : finding.citation}
       </p>
     </Card>
   );
@@ -56,7 +63,7 @@ function FindingCard({ finding, small = false }: { finding: Finding; small?: boo
 export default function ResultPage() {
   const t = useT();
   const router = useRouter();
-  const { ready, result, reset } = useCheck();
+  const { ready, result, answers, reset } = useCheck();
 
   if (!ready) return <PageContainer aria-busy="true" />;
 
@@ -73,6 +80,8 @@ export default function ResultPage() {
   const main = result.findings.filter((f) => f.severity !== "info").sort(byAmount);
   const notes = result.findings.filter((f) => f.severity === "info").sort(byAmount);
   const looksCorrect = result.totalOwed === 0 && main.length === 0;
+  const countyHelp = getCountyHelp(answers?.county);
+  const helpEntries = countyHelp?.entries ?? statewideHelp;
 
   function checkAnother() {
     reset();
@@ -81,49 +90,39 @@ export default function ResultPage() {
 
   return (
     <PageContainer className="flex flex-col gap-8">
-      {looksCorrect ? (
-        <section className="rounded-2xl border border-green-200 bg-green-50 p-6">
-          <div className="flex items-center gap-3">
-            <span
-              aria-hidden
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-700 text-xl text-white"
-            >
-              ✓
-            </span>
-            <h1 className="text-2xl font-bold leading-tight text-green-800 sm:text-3xl">
-              {t("result.correct.title")}
-            </h1>
-          </div>
-          <p className="mt-4 text-gray-700">{t("result.correct.body")}</p>
-          <ul className="mt-3 flex flex-col gap-2">
-            {result.checkedRules.map((id) => {
-              const key = `result.rule.${id}` as TKey;
-              return (
-                <li key={id} className="flex gap-2 text-gray-800">
-                  <span aria-hidden className="text-green-700">
-                    ✓
-                  </span>
-                  {key in dictionary.en ? t(key) : id}
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      ) : (
-        <section>
-          {result.totalOwed > 0 ? (
-            <h1 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
-              {t("result.owed")}{" "}
-              <span className="whitespace-nowrap text-accent">{formatUsd(result.totalOwed)}</span>
-            </h1>
-          ) : (
-            <h1 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
-              {t("result.problems")}
-            </h1>
-          )}
-          <p className="mt-2 text-gray-600">{t("result.sub")}</p>
-        </section>
-      )}
+      <div className="flex flex-col gap-4">
+        {looksCorrect ? (
+          <section className="rounded-2xl border border-green-200 bg-green-50 p-6">
+            <div className="flex items-center gap-3">
+              <span
+                aria-hidden
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-700 text-xl text-white"
+              >
+                ✓
+              </span>
+              <h1 className="text-2xl font-bold leading-tight text-green-800 sm:text-3xl">
+                {t("result.correct.title")}
+              </h1>
+            </div>
+            <p className="mt-4 text-gray-700">{t("result.correct.body")}</p>
+          </section>
+        ) : (
+          <section>
+            {result.totalOwed > 0 ? (
+              <h1 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
+                {t("result.owed")}{" "}
+                <span className="whitespace-nowrap text-accent">{formatUsd(result.totalOwed)}</span>
+              </h1>
+            ) : (
+              <h1 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
+                {t("result.problems")}
+              </h1>
+            )}
+            <p className="mt-2 text-gray-600">{t("result.sub")}</p>
+          </section>
+        )}
+        <LawStrip ruleIds={result.checkedRules} alwaysOpen={looksCorrect} />
+      </div>
 
       {main.length > 0 && (
         <section className="flex flex-col gap-4" aria-label={t("result.items")}>
@@ -142,16 +141,34 @@ export default function ResultPage() {
         </section>
       )}
 
-      <section className="rounded-2xl bg-gray-50 p-5">
+      <section className="flex flex-col gap-4 rounded-2xl bg-gray-50 p-5">
         <p className="text-gray-700">{t("result.disclaimer")}</p>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          <Button href="/help" variant="secondary" className="w-full">
-            {t("help.legalAid")}
-          </Button>
-          <Button href={LABOR_COMMISSIONER_URL} variant="secondary" className="w-full">
-            {t("help.fileClaim")}
-          </Button>
-        </div>
+        <h2 className="text-xl font-semibold text-gray-900">
+          {countyHelp
+            ? t("result.law.helpTitle").replace("{county}", t(countyHelp.nameKey))
+            : t("result.law.helpTitleState")}
+        </h2>
+        {countyHelp?.nearby && <p className="-mt-2 text-sm text-gray-600">{t("help.nearby")}</p>}
+        {helpEntries.map((e) => (
+          <Card key={`${e.nameKey}-${e.officeKey ?? "state"}`} className="p-4">
+            <h3 className="text-base font-semibold text-gray-900">{t(e.nameKey)}</h3>
+            {e.officeKey && <p className="mt-0.5 text-sm font-medium text-accent">{t(e.officeKey)}</p>}
+            <p className="mt-1 text-gray-700">{t(e.descKey)}</p>
+            <p className="mt-2">
+              <ExternalLink href={e.url}>{t("help.visit")}</ExternalLink>
+            </p>
+          </Card>
+        ))}
+        <p className="text-sm text-gray-600">{t("result.law.countyNote")}</p>
+        <Button href={LABOR_COMMISSIONER_URL} variant="secondary" className="w-full">
+          {t("help.fileClaim")}
+        </Button>
+        <Link
+          href="/help"
+          className="inline-flex min-h-11 items-center self-start text-sm font-semibold text-accent underline underline-offset-4"
+        >
+          {t("result.law.allHelp")}
+        </Link>
       </section>
 
       <section className="flex flex-col gap-3">
