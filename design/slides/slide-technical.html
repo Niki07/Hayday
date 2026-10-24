@@ -1,19 +1,23 @@
 <!doctype html><html><head><meta charset="utf-8"><style>
 *{box-sizing:border-box} body{margin:0;width:1920px;height:1080px;background:#F6ECD9;font-family:Inter,-apple-system,"Helvetica Neue",Arial,sans-serif;color:#6B3A14;position:relative;overflow:hidden}
-.logo{position:absolute;top:56px;right:72px;width:150px;height:150px}
-h1{position:absolute;top:92px;left:96px;margin:0;font-size:104px;font-weight:300;letter-spacing:1px;text-transform:uppercase;color:#6B3A14}
-.sub{position:absolute;top:224px;left:100px;font-size:34px;color:#8F5A2A;font-weight:400}
-.row{position:absolute;top:420px;left:96px;right:96px;display:flex;align-items:center;gap:0}
-.box{flex:1;background:#E3B993;border:3px solid #7A3A10;border-radius:28px;padding:40px 30px;text-align:center;min-height:250px;display:flex;flex-direction:column;justify-content:center}
-.box.big{background:#C2651F;border-color:#7A3A10;color:#F6ECD9;transform:scale(1.08);box-shadow:0 18px 40px rgba(122,58,16,.18)}
-.box .n{font-size:22px;letter-spacing:4px;opacity:.85;margin-bottom:10px}
-.box .t{font-size:44px;font-weight:700;line-height:1.05}
-.box .d{font-size:24px;margin-top:16px;line-height:1.3}
-.arrow{width:92px;flex:none;display:flex;justify-content:center}
-.arrow svg{width:70px;height:40px}
-.line{position:absolute;top:790px;left:0;right:0;text-align:center;font-size:36px;color:#6B3A14}
-.stack{position:absolute;bottom:60px;right:96px;font-size:26px;color:#8F5A2A;letter-spacing:1px}
-.stack b{color:#C2651F;margin:0 10px}
+.logo{position:absolute;top:48px;right:72px;width:130px;height:130px}
+h1{position:absolute;top:64px;left:96px;margin:0;font-size:92px;font-weight:300;letter-spacing:1px;text-transform:uppercase}
+.sub{position:absolute;top:184px;left:100px;font-size:28px;color:#8F5A2A}
+.row{position:absolute;top:270px;left:96px;right:96px;display:flex;align-items:stretch}
+.box{flex:1;background:#E3B993;border:3px solid #7A3A10;border-radius:24px;padding:26px 24px;display:flex;flex-direction:column}
+.box.big{background:#C2651F;color:#F6ECD9;box-shadow:0 14px 34px rgba(122,58,16,.18)}
+.box .n{font-size:18px;letter-spacing:4px;opacity:.8}
+.box .t{font-size:34px;font-weight:700;line-height:1.05;margin:4px 0 12px}
+.box ul{margin:0;padding-left:22px;font-size:20px;line-height:1.35}
+.box li{margin-bottom:6px}
+.box code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:18px;background:rgba(0,0,0,.08);padding:1px 6px;border-radius:6px}
+.box.big code{background:rgba(255,255,255,.18)}
+.arrow{width:64px;flex:none;display:flex;align-items:center;justify-content:center}
+.arrow svg{width:48px;height:32px}
+.band{position:absolute;left:96px;right:96px;top:760px;display:flex;gap:28px}
+.col{flex:1;border-top:3px solid #7A3A10;padding-top:14px}
+.col h3{margin:0 0 8px;font-size:22px;letter-spacing:3px;text-transform:uppercase;color:#C2651F}
+.col p{margin:0;font-size:21px;line-height:1.4;color:#6B3A14}
 </style></head><body>
 <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
 <g transform="translate(150 168) rotate(-45)" fill="#7A3A10" stroke="#7A3A10" stroke-linecap="round">
@@ -28,16 +32,33 @@ h1{position:absolute;top:92px;left:96px;margin:0;font-size:104px;font-weight:300
 <rect x="140" y="55" width="20" height="5" rx="2.5" fill="#E0A66B" transform="rotate(45 150 68)"/>
 </svg>
 <h1>Technical Implementation</h1>
-<div class="sub">AI reads. Code decides. AI writes.</div>
+<div class="sub">AI reads. Deterministic code decides. AI writes. Nothing is persisted.</div>
 <div class="row">
-  <div class="box"><div class="n">01</div><div class="t">PHOTO</div><div class="d">shrunk on the phone, never stored</div></div>
+  <div class="box"><div class="n">01</div><div class="t">CAPTURE</div><ul>
+    <li>Camera or gallery input, <code>capture="environment"</code></li>
+    <li>Client-side canvas downscale to 1600 px, JPEG 0.85 (HEIC → JPEG)</li>
+    <li>Base64 POST to a Next.js route handler, 8 MB cap</li></ul></div>
   <div class="arrow"><svg viewBox="0 0 70 40"><path d="M0 20h52M40 6l14 14-14 14" fill="none" stroke="#7A3A10" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-  <div class="box"><div class="n">02</div><div class="t">AI READS</div><div class="d">Claude via OpenRouter returns structured numbers, validated + retried</div></div>
+  <div class="box"><div class="n">02</div><div class="t">VISION EXTRACTION</div><ul>
+    <li>Claude Sonnet via OpenRouter (OpenAI-compatible API)</li>
+    <li>Transcribe-only system prompt, JSON output</li>
+    <li>Zod schema validation, one retry with the parse error fed back, confidence score, safe fallback to manual entry</li></ul></div>
   <div class="arrow"><svg viewBox="0 0 70 40"><path d="M0 20h52M40 6l14 14-14 14" fill="none" stroke="#7A3A10" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-  <div class="box big"><div class="n">03</div><div class="t">CODE CHECKS</div><div class="d">9 California rules, no AI<br>state-verified rates, 60 tests</div></div>
+  <div class="box big"><div class="n">03</div><div class="t">RULES ENGINE</div><ul>
+    <li>Pure TypeScript, no AI: 9 rules as composable check functions</li>
+    <li>Labor Code §§ 226, 226.2, 226.7, 512, 857, 1182.12, 1194; Wage Order 14</li>
+    <li>Rate table with effective dates, verified against DIR</li>
+    <li>Every finding carries amount, arithmetic, citation, en/es text</li>
+    <li>60 Vitest tests incl. golden samples</li></ul></div>
   <div class="arrow"><svg viewBox="0 0 70 40"><path d="M0 20h52M40 6l14 14-14 14" fill="none" stroke="#7A3A10" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-  <div class="box"><div class="n">04</div><div class="t">AI WRITES</div><div class="d">bilingual letter from verified numbers only</div></div>
+  <div class="box"><div class="n">04</div><div class="t">GENERATE + ACT</div><ul>
+    <li>LLM drafts the bilingual demand letter from the verified <code>CheckResult</code> only; output checked so no other dollar figure appears</li>
+    <li>Print stylesheet → PDF; CSV export via Blob</li>
+    <li>County-routed legal aid data</li></ul></div>
 </div>
-<div class="line">Nothing stored &nbsp;·&nbsp; No accounts &nbsp;·&nbsp; One server-side key</div>
-<div class="stack">Next.js<b>·</b>TypeScript<b>·</b>Vercel<b>·</b>OpenRouter</div>
+<div class="band">
+  <div class="col"><h3>Stack</h3><p>Next.js 16 App Router · TypeScript · Tailwind · Vercel serverless · Vitest · one server-side key, env-only</p></div>
+  <div class="col"><h3>Privacy model</h3><p>No database. State in React context mirrored to <code style="font-family:Menlo,monospace">sessionStorage</code>; cleared on tab close. Images read once, never written to disk.</p></div>
+  <div class="col"><h3>Organizer mode</h3><p>Same engine over N stubs, parallel extraction (2 in flight), stub-only checks with estimates flagged, pattern frequency, CSV with citations.</p></div>
+</div>
 </body></html>
