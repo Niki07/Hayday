@@ -512,3 +512,12 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: `/organizer` stays and is linked from the footer as "For organizers" / "Para organizadores". The noindex flag from handoff 09 is lifted.
 - Why: Niki reviewed the hidden page and approved it.
 - Consequences / shortcuts: Organizer-specific finding titles (D-053 open item) remain a polish task.
+
+## D-055 — Organizer view promoted to a home page card
+- Date: 2026-10-24
+- Decided by: Niki's team with Fable 5.1
+- Status: Accepted
+- Importance: Minor
+- Decision: A card on the home page after "What we check" ("Organizer or legal aid worker?") links to `/organizer`. The footer link stays. No header link, to keep the phone header to the logo and the language toggle.
+- Why: Niki: nobody looks at footers. A home card is visible to judges and organizers without competing with the worker's main button.
+- Consequences / shortcuts: None.
