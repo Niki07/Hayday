@@ -8,7 +8,7 @@ export default function PayStubIllustration() {
   const t = useT();
   const rows: [string, string][] = [
     [t("stub.hours"), "46.0"],
-    [t("stub.rate"), "$16.50"],
+    [t("stub.rate"), "$16.90"],
     [t("stub.pieces"), "212"],
   ];
 
@@ -44,13 +44,13 @@ export default function PayStubIllustration() {
         {t("stub.gross")}
       </text>
       <text x="304" y="182" fontSize="13" fontWeight="600" fill="#111827" textAnchor="end">
-        $759.00
+        $777.40
       </text>
       <text x="16" y="203" fontSize="13" fontWeight="600" fill="#374151">
         {t("stub.net")}
       </text>
       <text x="304" y="203" fontSize="13" fontWeight="600" fill="#111827" textAnchor="end">
-        $641.20
+        $656.70
       </text>
     </svg>
   );
