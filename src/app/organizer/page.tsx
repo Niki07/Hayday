@@ -171,6 +171,7 @@ export default function OrganizerPage() {
         t("org.col.hours"),
         t("org.col.gross"),
         t("org.col.issues"),
+        t("org.col.rule"),
         t("org.col.owed"),
       ],
       total: t("org.total"),
@@ -398,7 +399,10 @@ export default function OrganizerPage() {
                               ) : (
                                 <ul className="flex flex-col gap-0.5">
                                   {r.result.findings.map((f) => (
-                                    <li key={f.id}>{f.title[lang]}</li>
+                                    <li key={f.id}>
+                                      {f.title[lang]}{" "}
+                                      <span className="whitespace-nowrap text-xs text-gray-500">({f.citation})</span>
+                                    </li>
                                   ))}
                                 </ul>
                               )}

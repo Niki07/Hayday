@@ -94,6 +94,7 @@ export function toCsv(rows: OrganizerRow[], lang: Lang, labels: CsvLabels): stri
       stub.hoursWorked !== undefined ? String(stub.hoursWorked) : "",
       stub.grossPay !== undefined ? stub.grossPay.toFixed(2) : "",
       result.findings.map((f) => f.title[lang]).join("; "),
+      result.findings.map((f) => f.citation).join("; "),
       result.totalOwed.toFixed(2) + (est ? ` (${labels.estimated})` : ""),
     ]);
   }
@@ -104,6 +105,7 @@ export function toCsv(rows: OrganizerRow[], lang: Lang, labels: CsvLabels): stri
     "",
     String(round2(sum(rows.map((r) => r.stub.hoursWorked ?? 0)))),
     round2(sum(rows.map((r) => r.stub.grossPay ?? 0))).toFixed(2),
+    "",
     "",
     s.totalOwed.toFixed(2),
   ]);
