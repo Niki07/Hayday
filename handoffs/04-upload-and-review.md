@@ -51,9 +51,26 @@ A worker can take a photo or upload a file, see "Reading your pay stub...", then
 - The dev server on port 3000 belongs to the planning session; do not start a second one on 3000. If you need your own, use `PORT=3001 npm run dev`.
 
 ## Report back (filled in by the subrunner)
-- Status:
+- Status: Done. Lint and `tsc --noEmit` are clean. Nothing committed.
 - What was built:
+  - `src/lib/check-state.tsx` (`CheckProvider`, `useCheck()` with `ready`, `start`, `update`, `reset`; sessionStorage key `hayday-check`) and `src/app/check/layout.tsx`.
+  - `src/lib/image.ts` (canvas downscale to 1600 px JPEG 0.85, thumbnail, PDF passthrough).
+  - `src/app/check/page.tsx`: **Take a photo** (`accept="image/*" capture="environment"`) and **Upload a file** (`accept="image/*,application/pdf"`), "Reading your pay stub..." state with thumbnail and a moving bar, error card with **Try again** / **Enter details by hand**, and **Try a sample**.
+  - `src/components/check/SampleSheet.tsx`: native `<dialog>` bottom sheet with the five samples, auto-opens on `?sample=` (highlights the matching one), picking one stores stub and answers and goes to `/check/review`.
+  - `src/app/check/review/page.tsx`: editable fields ("Total hours"), amber "Please check these numbers." under confidence 0.6, "could not read" notice for unknown/0, county dropdown (Central Valley first), days 1–7 with an hours input per day, rest/meal yes-some-no, paid by piece, **Check my pay** runs `checkPayStub`, stores the result, goes to `/check/result`.
+  - About 95 strings added to `src/lib/i18n.ts` in English and Spanish (`check.*`, `review.*`).
 - What was NOT done and why:
-- Decisions logged: D-___
+  - PDFs reach the API but `/api/extract` rejects `application/pdf` (D-020), so a PDF ends at the by-hand option. See open question.
+  - Pay periods over 7 days: only 7 daily-hours inputs, as the handoff says.
+  - Did not test the camera on a real phone, or HEIC (Chrome desktop cannot decode it).
+  - Did not touch `package.json`, `src/lib/rules/`, `src/lib/llm.ts`, `src/app/api/`.
+- Decisions logged: D-039, D-040, D-041
 - Open questions for Fable:
+  - PDF: accept `application/pdf` in `/api/extract` (and pass it to the model in `llm.ts`), or remove `application/pdf` from the file picker's `accept`? Currently it is offered but always fails.
+  - Handoff 05 reads the state through its own `src/lib/stored-check.ts`; it can stay or switch to `useCheck()` (same JSON, same key). Not urgent.
 - How to verify:
+  - Next 16 allows only one `next dev` per folder, so `PORT=3001 npm run dev` fails while the planning server is up; I tested against the planning server on port 3000 (nothing restarted).
+  - At 375 px: `/check` shows both buttons above the fold. `/check?sample=1` opens the sheet; pick "Grape harvest" → `/check/review` → **Check my pay** → `/check/result`, stored total $184.47 (daily-ot 113.00, piece-rest 37.67, unpaid-hours 33.80). No network call is made on this path.
+  - Reload `/check/review`: data stays (sessionStorage).
+  - Real upload (DEMO_MODE=false): upload `public/samples/sample-3.png` on `/check`; it reads, shows "Reading your pay stub...", then fills the review form (Valley Crest Citrus, 24 bins at $22.50, confidence 0.95). Submitting empty shows errors for county and the two break questions.
+  - Failure path: with `/api/extract` blocked the error card shows both buttons; **Enter details by hand** opens an empty form in the current language.
