@@ -70,7 +70,7 @@ describe("organizer sample employer", () => {
   it("exports initials only, one row per stub plus totals", () => {
     const rows = organizerSamples.map((stub) => ({ stub, result: checkStubOnly(stub, "Fresno") }));
     const csv = toCsv(rows, "en", {
-      headers: ["Worker", "Period", "Type", "Hours", "Gross", "Issues", "Owed"],
+      headers: ["Worker", "Period", "Type", "Hours", "Gross", "Issues", "Rule", "Owed"],
       total: "Total",
       estimated: "est.",
       payType: (t) => t,
