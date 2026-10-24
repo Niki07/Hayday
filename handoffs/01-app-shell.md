@@ -28,12 +28,12 @@ This is the frame every other page plugs into. See PLAN.md "Pages" and D-006 in 
 9. Every visible string in both languages. Spanish should be natural, not machine-literal.
 
 ## Done when
-- [ ] `npm run dev` opens the home page with header, toggle, footer; toggle switches all text to Spanish and the choice survives a reload
-- [ ] All routes in PLAN.md render without errors
-- [ ] Buttons are at least 52px tall on mobile and the page has no horizontal scroll at 375px width
-- [ ] `npm run lint` passes
-- [ ] Decisions (accent color, font, any library) logged in ENGINEERING.md
-- [ ] Report back section below is filled in
+- [x] `npm run dev` opens the home page with header, toggle, footer; toggle switches all text to Spanish and the choice survives a reload
+- [x] All routes in PLAN.md render without errors
+- [x] Buttons are at least 52px tall on mobile and the page has no horizontal scroll at 375px width
+- [x] `npm run lint` passes
+- [x] Decisions (accent color, font, any library) logged in ENGINEERING.md
+- [x] Report back section below is filled in
 
 ## Constraints
 - Do not edit package.json or install packages (D-009). Needed dependency → Open item in your report.
@@ -55,9 +55,9 @@ This is the frame every other page plugs into. See PLAN.md "Pages" and D-006 in 
 - Any dependency beyond `next/font`
 
 ## Report back (filled in by the subrunner)
-- Status:
-- What was built:
-- What was NOT done and why:
-- Decisions logged: D-___
-- Open questions for Fable:
-- How to verify:
+- Status: Done. All "Done when" boxes checked. Nothing committed (per instructions).
+- What was built: `src/lib/i18n.ts` (en/es dictionary, `LanguageProvider`, `useT`, `useLanguage`), `LanguageToggle`, `SiteHeader`, `SiteFooter`, `PayStubIllustration`, `StubPage`, `ui/Button` (primary/secondary/ghost, lg = 52px min, md = 44px; accepts `href` for internal or external links), `ui/Card`, `ui/PageContainer`, design tokens in `globals.css`, layout with header and footer, home page, `/help` page, stubs for `/check`, `/check/review`, `/check/result`, `/check/claim`.
+- What was NOT done and why: No phone numbers on `/help` (could not verify; handoff says omit). Kern, Kings, Merced and San Joaquin have only one or two organizations, or nearest offices for Kings; no more could be verified from official sites in the time. "Try a sample" links to `/check?sample=1`, which handoff 04 must handle. Dark mode removed as specified.
+- Decisions logged: D-010 to D-014
+- Open questions for Fable: (1) Add more Central Valley groups to `/help` after verifying them (Kern especially)? (2) Confirm the Spanish tone (formal "usted"). (3) The first Spanish page load flashes English for a moment (D-011); acceptable for the demo?
+- How to verify: `npm run dev`, open http://localhost:3000 at 375px wide. Home shows the headline "Make every payday a Hayday."; tap ES, the page turns Spanish and stays Spanish after a reload. Buttons are 52px tall (header toggle and footer link 44px), page width equals viewport (no horizontal scroll). `/help` and the four `/check*` routes return 200. `npm run lint` passes. Note: the dev server on port 3000 started by the planning session served stale CSS until `globals.css` content changed; if colors look wrong, restart it.

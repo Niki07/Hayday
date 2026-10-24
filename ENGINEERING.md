@@ -107,3 +107,57 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: `vitest`, `tsx`, `openai` and `zod` are installed and the `test` and `llm:test` scripts exist before any subrunner starts. Subrunners do not edit package.json or install packages; they log an Open item if they need one.
 - Why: Three sessions share this folder in parallel. package.json and the lockfile are the one file every task would otherwise touch, and concurrent npm installs corrupt them.
 - Consequences / shortcuts: Any new dependency requires a Fable decision.
+
+## D-010 — Design tokens: deep green accent #166534, Inter font
+- Date: 2026-10-24 10:30
+- Decided by: Sonnet (session: handoffs/01-app-shell.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: Single accent color deep green `#166534` (hover `#14532d`, soft tint `#ecf6ef`) defined as Tailwind theme tokens `accent`, `accent-hover`, `accent-soft` in `globals.css`. Font is Inter via `next/font/google` (replaces Geist from the scaffold) with a system-font fallback stack. Dark mode removed from `globals.css`; `color-scheme: light` is forced.
+- Why: Green reads as calm, trustworthy and agricultural without being childish; it passes contrast on white (about 7:1). Blue was the alternative and looks like every fintech app. Inter is what the handoff names.
+- Consequences / shortcuts: `next/font/google` fetches Inter at build time, so a build needs network once. Tokens live only in `globals.css`; change them there.
+
+## D-011 — Language state is a tiny external store read with useSyncExternalStore
+- Date: 2026-10-24 10:30
+- Decided by: Sonnet (session: handoffs/01-app-shell.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: `src/lib/i18n.ts` keeps the language in a module-level store (`localStorage` key `hayday-lang`, wrapped in try/catch) exposed through `useSyncExternalStore`. Server and first hydration render are always English; the saved choice applies right after hydration. `LanguageProvider` also sets `<html lang>`. Pages that show text are client components using `useT()`.
+- Why: Reading localStorage during render causes a hydration mismatch, and setting state in an effect trips the lint rules. The external store avoids both. Rejected: cookie plus server rendering (more moving parts, hurts static pages).
+- Consequences / shortcuts: A Spanish user sees English for a split second on first load. Pages can no longer export `metadata` if they are client components; the root layout supplies one title for the whole site.
+
+## D-012 — Help page lists only verified organizations, with no phone numbers
+- Date: 2026-10-24 10:40
+- Decided by: Sonnet (session: handoffs/01-app-shell.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: `/help` lists the CA Labor Commissioner wage claim page, California Rural Legal Assistance (CRLA) and Central California Legal Services (CCLS), grouped by county from the offices their own sites list (crla.org/locations: Fresno, Delano, Lamont, Madera, Modesto, Stockton, Tulare; centralcallegal.org: Fresno, Merced, Visalia). Kings County has no verified office, so it shows the nearest Tulare County offices with a note. Links go to org sites, never phone numbers.
+- Why: The handoff forbids invented contact details. Kern's Greater Bakersfield Legal Assistance appeared only in third-party directories and its core areas (housing, family) do not include wages, so it is left out. CCLS's own page does not mention employment, so its blurb says "ask them if they can help with a pay problem". The Kings coverage claim for CCLS came only from search snippets, so it is not asserted.
+- Consequences / shortcuts: Coverage is thin for Kern, Kings, Merced and San Joaquin. Fable or Niki may want to add more groups (for example a county-specific one) after checking them. County-to-office mapping is in a data array at the top of `src/app/help/page.tsx`. Verified on 2026-10-24; offices can change.
+
+## D-013 — Home page pay stub picture is an inline SVG with made-up numbers
+- Date: 2026-10-24 10:45
+- Decided by: Sonnet (session: handoffs/01-app-shell.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: `src/components/PayStubIllustration.tsx` is a hand-drawn SVG with generic numbers (46 hours, $16.50, 212 pieces). Its labels follow the language toggle.
+- Why: Handoff bans internet images. The numbers are decoration, not a sample for the rules engine.
+- Consequences / shortcuts: It does not match the sample stubs from handoff 06; swap it for a real sample screenshot later if wanted. The Spanish headline "Haga de cada día de pago un Hayday." uses the formal "usted" form, which is a copy choice for Niki to confirm.
+
+## D-014 — Stub pages share one StubPage component; Try a sample links to /check?sample=1
+- Date: 2026-10-24 10:45
+- Decided by: Sonnet (session: handoffs/01-app-shell.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: `/check`, `/check/review`, `/check/result`, `/check/claim` render `src/components/StubPage.tsx` (a heading and a "coming soon" line). Handoffs 04 and 05 replace each page file. The "Try a sample" link goes to `/check?sample=1` as written in the handoff; that page does not use the query yet.
+- Why: Keeps routing working with the least code.
+- Consequences / shortcuts: `StubPage` and the `stub.coming` string can be deleted once all four pages are real.
+
+## D-015 — vitest installed with --legacy-peer-deps
+- Date: 2026-10-24
+- Decided by: Fable 5.1 (planning)
+- Status: Accepted
+- Importance: Minor
+- Decision: `vitest@5` is installed as a dev dependency using `--legacy-peer-deps` because of a peer range conflict between `vite@8` and the scaffold's `@types/node@^20`. D-009 claimed it was preinstalled; it was not, because the scaffold was copied before its install finished.
+- Why: Upgrading `@types/node` mid-build risks breaking other sessions; the peer warning is harmless for running tests.
+- Consequences / shortcuts: Any future `npm install` in this project should also pass `--legacy-peer-deps`.
