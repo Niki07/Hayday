@@ -146,14 +146,6 @@ export default function OrganizerPage() {
     setRows([]);
   }
 
-  function loadSample() {
-    setCounty(ORGANIZER_SAMPLE_COUNTY);
-    if (!employer.trim()) setEmployer(ORGANIZER_SAMPLE_EMPLOYER);
-    setRows((rs) => [
-      ...rs,
-      ...organizerSamples.map((stub) => ({ key: newKey(), status: "done" as const, stub: structuredClone(stub) })),
-    ]);
-  }
 
   const results = useMemo(
     () =>
@@ -248,9 +240,6 @@ export default function OrganizerPage() {
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button size="md" onClick={() => fileInput.current?.click()}>
             {t("org.addPhotos")}
-          </Button>
-          <Button size="md" variant="secondary" onClick={loadSample}>
-            {t("org.loadSample")}
           </Button>
           {rows.length > 0 && (
             <Button size="md" variant="ghost" onClick={clearAll}>

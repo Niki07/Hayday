@@ -530,3 +530,12 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: "Organizers" / "Organizadores" link in the site header between the logo and the language toggle, on all screen sizes. The home page card from D-055 is removed; the footer link stays.
 - Why: Niki checked on her phone: the header link is visible and fits; the card was redundant.
 - Consequences / shortcuts: Header is three items wide on phones; verified no overflow at 375 px.
+
+## D-057 — Organizer page has no sample button; six employer stub images instead
+- Date: 2026-10-24
+- Decided by: Niki's team with Fable 5.1
+- Status: Accepted
+- Importance: Minor
+- Decision: The "Load sample employer" button is removed from `/organizer` (fixture and tests stay). The six Sunfield Vineyards stubs now render at `/samples/org-1` … `/samples/org-6` and are screenshotted to `public/samples/employer-1.png` … `employer-6.png`, so the organizer demo uses the real photo-upload path with these images.
+- Why: Niki wants the organizer demo to look like real use (upload stubs), not a canned button.
+- Consequences / shortcuts: The organizer demo now costs a few cents of AI per run and takes about 15 s per two stubs; record it once.

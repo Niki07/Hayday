@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getSample, samples } from "@/lib/fixtures/samples";
+import { organizerSamples } from "@/lib/fixtures/organizer-samples";
 import type { PayStub } from "@/lib/types";
 
 // Renders a sample as an on-screen agricultural payroll stub so it can be photographed from the laptop
@@ -51,6 +52,23 @@ const extras: Record<string, { street: string; city: string; employerId: string;
     workerId: "XXXX",
   },
 };
+
+// Organizer sample employer (handoff 09): six stubs from Sunfield Vineyards, ids org-1 … org-6.
+const ORG_CREWS = ["Crew 3, Block B", "Crew 3, Block B", "Crew 2, Block A", "Crew 3, Block B", "Crew 2, Block A", "Crew 1, Block C"];
+function resolveSample(id: string): { id: string; stub: PayStub } | undefined {
+  const m = id.match(/^org-(\d)$/);
+  if (m) {
+    const stub = organizerSamples[Number(m[1]) - 1];
+    return stub ? { id, stub } : undefined;
+  }
+  const sample = getSample(id);
+  return sample ? { id: sample.id, stub: sample.stub } : undefined;
+}
+function extrasFor(id: string) {
+  if (extras[id]) return extras[id];
+  const n = Number(id.replace("org-", "")) || 1;
+  return { ...extras["grape-trays"], crew: ORG_CREWS[n - 1] ?? "Crew 3, Block B", checkNo: String(40820 + n) };
+}
 
 const money = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 });
@@ -111,12 +129,16 @@ function earningsLines(stub: PayStub): Line[] {
 
 // Cache Components needs the ids known at build time. Both spellings of each sample are prerendered.
 export function generateStaticParams() {
-  return [...samples.map((s) => ({ id: s.id })), ...samples.map((_, i) => ({ id: String(i + 1) }))];
+  return [
+    ...samples.map((s) => ({ id: s.id })),
+    ...samples.map((_, i) => ({ id: String(i + 1) })),
+    ...organizerSamples.map((_, i) => ({ id: `org-${i + 1}` })),
+  ];
 }
 
 export async function generateMetadata({ params }: PageProps<"/samples/[id]">): Promise<Metadata> {
   const { id } = await params;
-  const sample = getSample(id);
+  const sample = resolveSample(id);
   return { title: sample ? `Sample pay stub: ${sample.stub.employerName}` : "Sample pay stub" };
 }
 
@@ -139,11 +161,11 @@ export default function SampleStubPage({ params }: PageProps<"/samples/[id]">) {
 
 async function SampleStub({ params }: { params: PageProps<"/samples/[id]">["params"] }) {
   const { id } = await params;
-  const sample = getSample(id);
+  const sample = resolveSample(id);
   if (!sample) notFound();
 
   const { stub } = sample;
-  const x = extras[sample.id];
+  const x = extrasFor(sample.id);
   const lines = earningsLines(stub);
   const deductions = stub.deductions ?? [];
   const totalDeductions = Math.round(deductions.reduce((sum, d) => sum + d.amount, 0) * 100) / 100;
