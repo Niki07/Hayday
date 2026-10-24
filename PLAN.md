@@ -17,7 +17,7 @@ A farmworker photographs their pay stub. Hayday reads it, checks it against Cali
 7. Close: "One photo. Money back. Nothing stored." Mention the organizer view if built.
 
 ## Stack and architecture (D-005, D-007)
-- **Next.js 15 App Router, TypeScript, Tailwind, `src/` directory.** One repo, one Vercel deploy.
+- **Next.js 16.4.3 App Router, TypeScript, Tailwind, `src/` directory.** One repo, one Vercel deploy.
 - **No database.** State for one check lives in React context backed by `sessionStorage`. Nothing persists after the tab closes.
 - **Two API routes:**
   - `POST /api/extract` — image (base64) in, structured pay stub fields out. Calls the LLM vision model.

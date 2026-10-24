@@ -47,6 +47,9 @@ A decision that is not in `ENGINEERING.md` did not happen.
 - All LLM calls go through the single wrapper file described in `SETUP.md`. Every external call must work with `DEMO_MODE=true` (canned responses).
 - Curl an API once from the terminal before building UI on it.
 
+## Next.js version note
+This project uses Next.js 16.4.3, which has breaking changes from what you may remember. Before writing any code under `src/`, read the relevant guide in `node_modules/next/dist/docs/` as `AGENTS.md` instructs. Heed deprecation notices.
+
 ## Git and safety
 - Init git before writing code. Commit after every finished handoff, at least every 30 minutes. Push at least hourly.
 - Never force-push, never rewrite shared history, never run `rm -rf` on anything you did not create this session, never delete the `.env`.
