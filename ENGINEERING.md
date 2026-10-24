@@ -413,3 +413,12 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: `.npmrc` at the root with `legacy-peer-deps=true`, so `npm install` on Vercel (and any fresh clone) succeeds despite the vitest/vite peer range conflict (D-015, D-031).
 - Why: First production deploy failed at `npm install`. Project is deployed in `DEMO_MODE=true` first; the API key is added by Niki and the flag flipped to `false` afterwards.
 - Consequences / shortcuts: Peer warnings are hidden project-wide. Fine for a hackathon.
+
+## D-044 — Production URL: https://hayday-sigma.vercel.app
+- Date: 2026-10-24
+- Decided by: Fable 5.1 (planning)
+- Status: Accepted
+- Importance: Minor
+- Decision: Vercel project `hayday` (scope diki8), production alias `https://hayday-sigma.vercel.app`. Deployed with `npx vercel deploy --prod --yes` from this folder; no Git integration. Per-deployment `*-diki8.vercel.app` URLs require a Vercel login (default deployment protection), so the alias is the one to share. Env: `LLM_MODEL`, `DEMO_MODE` set from the CLI; `OPENROUTER_API_KEY` is added by Niki herself so the planning session never handles the secret.
+- Why: Vercel was the team's choice; CLI deploy avoids needing a GitHub repo today.
+- Consequences / shortcuts: Every redeploy is a manual `vercel deploy --prod`. `DEMO_MODE` is `true` until the key is in; then flip to `false` and redeploy.

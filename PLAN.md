@@ -118,7 +118,7 @@ Timeline: wave 1 runs hours 0–1.5 (three sessions in parallel). Wave 2 runs ho
 ```bash
 npm run dev
 ```
-Opens on http://localhost:3000. `DEMO_MODE=true` in `.env` makes every AI call return fixtures.
+Opens on http://localhost:3000. Production: https://hayday-sigma.vercel.app (D-044). `DEMO_MODE=true` in `.env` makes every AI call return fixtures.
 
 ## Open questions (take to Fable)
 - Submission format and deadline, not yet confirmed by organizers.
