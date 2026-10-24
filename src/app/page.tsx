@@ -47,12 +47,6 @@ export default function Home() {
         </figure>
       </section>
 
-      <section>
-        <Card className="border-accent/30 bg-accent-soft">
-          <h2 className="text-lg font-semibold text-accent">{t("home.privacy.title")}</h2>
-          <p className="mt-1 text-gray-800">{t("home.privacy.body")}</p>
-        </Card>
-      </section>
     </PageContainer>
   );
 }

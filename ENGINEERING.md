@@ -431,3 +431,12 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: (1) The claim page shows one letter at a time with an English/Español tab on every screen size, and "Download PDF" prints only the selected letter plus a findings table in that language. (2) The visible "Try a sample" buttons are removed from the home and upload pages; `/check?sample=N` still opens the sample sheet for demos. (3) "Find free legal aid" (`/help`) and "How to file a wage claim" (Labor Commissioner page, new tab) appear as a pair of full-width buttons on the result page and directly under Download PDF on the claim page.
 - Why: Niki's feedback after the first live run: a worker wants the letter in their own language, the sample button looks odd to a real user, and the two actions that actually get money back were buried at the bottom.
 - Consequences / shortcuts: The demo now starts from the `/check?sample=1` link or from photographing `/samples/1` on screen; DEMO.md must say so.
+
+## D-046 — Home privacy box removed; bilingual /terms page added
+- Date: 2026-10-24
+- Decided by: Niki's team with Fable 5.1
+- Status: Accepted
+- Importance: Minor
+- Decision: The "Your privacy" card on the home page is removed (the footer already says it). A `/terms` page, linked from the footer as "Terms and privacy", states in plain English and Spanish: no data is saved; results are guidance, not legal advice, and not legally binding on the worker or the employer; what is checked and where rates come from; that retaliation is illegal and claims are free and do not require immigration papers; that this is a one-day hackathon prototype.
+- Why: Niki's feedback; judges and legal aid partners will look for exactly this disclaimer.
+- Consequences / shortcuts: The rights paragraph is general public guidance, not tailored advice; wording should be reviewed by a legal aid organization before any real launch.

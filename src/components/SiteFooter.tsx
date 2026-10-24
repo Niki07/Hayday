@@ -11,12 +11,20 @@ export default function SiteFooter() {
       <PageContainer className="flex flex-col gap-3 text-sm text-gray-600">
         <p>{t("footer.privacy")}</p>
         <p>{t("footer.estimate")}</p>
-        <Link
-          href="/help"
-          className="inline-flex min-h-11 items-center font-semibold text-accent underline underline-offset-4"
-        >
-          {t("footer.help")}
-        </Link>
+        <div className="flex flex-wrap gap-x-6">
+          <Link
+            href="/help"
+            className="inline-flex min-h-11 items-center font-semibold text-accent underline underline-offset-4"
+          >
+            {t("footer.help")}
+          </Link>
+          <Link
+            href="/terms"
+            className="inline-flex min-h-11 items-center font-semibold text-accent underline underline-offset-4"
+          >
+            {t("footer.terms")}
+          </Link>
+        </div>
       </PageContainer>
     </footer>
   );
