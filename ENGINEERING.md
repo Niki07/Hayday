@@ -539,3 +539,12 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: The "Load sample employer" button is removed from `/organizer` (fixture and tests stay). The six Sunfield Vineyards stubs now render at `/samples/org-1` … `/samples/org-6` and are screenshotted to `public/samples/employer-1.png` … `employer-6.png`, so the organizer demo uses the real photo-upload path with these images.
 - Why: Niki wants the organizer demo to look like real use (upload stubs), not a canned button.
 - Consequences / shortcuts: The organizer demo now costs a few cents of AI per run and takes about 15 s per two stubs; record it once.
+
+## D-058 — "How it works" page and header navigation row
+- Date: 2026-10-24
+- Decided by: Niki's team with Fable 5.1
+- Status: Accepted
+- Importance: Minor
+- Decision: `/how-it-works` explains the three steps (AI reads the photo, code checks the pay, the letter is written from verified numbers), privacy, accuracy and the organizer view, in both languages, with buttons to `/check` and `/rules`. The header now has a nav with "How it works" and "Organizers"; on phones it wraps to a second row under the logo, on wider screens it sits inline. Verified no horizontal overflow at 375 px in English and Spanish.
+- Why: Niki asked for a visible "how it works" tab; it is the first thing judges look for and it carries the AI-vs-code story.
+- Consequences / shortcuts: The phone header is now two rows tall (about 44 px more).

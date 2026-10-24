@@ -10,7 +10,7 @@ export default function SiteHeader() {
   const t = useT();
   return (
     <header className="border-b border-gray-200 bg-white">
-      <PageContainer className="flex items-center justify-between py-3">
+      <PageContainer className="flex flex-wrap items-center justify-between gap-x-4 py-3">
         <Link
           href="/"
           aria-label={t("nav.home")}
@@ -26,15 +26,24 @@ export default function SiteHeader() {
           />
           Hayday
         </Link>
-        <div className="flex items-center gap-3 sm:gap-5">
+        <nav
+          aria-label={t("header.how")}
+          className="order-last flex basis-full items-center gap-5 sm:order-none sm:basis-auto"
+        >
+          <Link
+            href="/how-it-works"
+            className="inline-flex min-h-11 items-center whitespace-nowrap text-sm font-semibold text-accent underline underline-offset-4"
+          >
+            {t("header.how")}
+          </Link>
           <Link
             href="/organizer"
             className="inline-flex min-h-11 items-center whitespace-nowrap text-sm font-semibold text-accent underline underline-offset-4"
           >
             {t("header.organizers")}
           </Link>
-          <LanguageToggle />
-        </div>
+        </nav>
+        <LanguageToggle />
       </PageContainer>
     </header>
   );
