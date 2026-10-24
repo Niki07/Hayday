@@ -10,7 +10,7 @@ Hayday is a free, bilingual web app that works on any phone. A worker takes a ph
 
 ## Who it helps
 - **Farmworkers**, mostly Spanish-speaking, who suspect a short check and currently have no way to check it. Hayday turns a vague feeling into a number and a document in under two minutes.
-- **Legal aid offices and farmworker organizations**, who spend hours doing this math by hand for each client. Hayday does the first pass so staff can focus on the cases that matter. An organizer view, planned next, lets them drop in many stubs from one employer and see the pattern.
+- **Legal aid offices and farmworker organizations**, who spend hours doing this math by hand for each client. Hayday does the first pass so staff can focus on the cases that matter. An supervisor view, planned next, lets them drop in many stubs from one employer and see the pattern.
 
 ## How it works
 1. **Read.** An AI vision model turns a crumpled, badly lit photo of a pay stub into structured numbers: hours, rates, piece counts, gross and net pay.
@@ -29,7 +29,7 @@ Every dollar Hayday recovers goes to a household that needs it most. Beyond indi
 - **Grants and partnerships** with state labor agencies and foundations focused on farmworker welfare, who already fund outreach and education on exactly this problem.
 
 ## What is next
-- Organizer view: pattern detection across many stubs from one employer.
+- Supervisor view: pattern detection across many stubs from one employer.
 - Voice input for workers who prefer to speak rather than type.
 - Text-message results for workers without data plans.
 - Additional languages: Mixtec audio, Punjabi, Hmong.

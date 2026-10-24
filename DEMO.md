@@ -2,7 +2,7 @@
 
 Live site: https://hayday-sigma.vercel.app
 Sample path (no network needed): https://hayday-sigma.vercel.app/check?sample=1
-Employer stub images for the organizer view: public/samples/employer-1.png … employer-6.png
+Employer stub images for the supervisor view: public/samples/employer-1.png … employer-6.png
 (also at https://hayday-sigma.vercel.app/samples/employer-1.png etc.)
 
 ## Recording order (two parts, stitch together; 2.5–3 min)
@@ -44,7 +44,7 @@ Edit: cut every wait, slow cursor, captions on the two AI pauses, no music under
 3. Review (20 s): Fresno, 5 days, 10 h, breaks.
 4. Result (45 s): $184.47; read the rest-break card; click the citation; Checked-against box; Fresno legal aid (CRLA: Fresno, Delano, Lamont, Madera, Modesto, Stockton, Tulare; CCLS: Fresno, Merced, Visalia).
 5. Letter (30 s): Prepare my claim; Español; Download PDF.
-6. Organizer (45 s): pre-loaded tab with six Sunfield stubs; "4 of 6"; CSV; "estimates low on purpose".
+6. Supervisor (45 s): pre-loaded tab with six Sunfield stubs; "4 of 6"; CSV; "estimates low on purpose".
 7. Small features (30 s): How it works; No pay stub button; Terms, nothing stored.
 8. Close (10 s): "Make every payday a Hayday."
 
