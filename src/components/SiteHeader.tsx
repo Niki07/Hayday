@@ -26,7 +26,15 @@ export default function SiteHeader() {
           />
           Hayday
         </Link>
-        <LanguageToggle />
+        <div className="flex items-center gap-3 sm:gap-5">
+          <Link
+            href="/organizer"
+            className="inline-flex min-h-11 items-center whitespace-nowrap text-sm font-semibold text-accent underline underline-offset-4"
+          >
+            {t("header.organizers")}
+          </Link>
+          <LanguageToggle />
+        </div>
       </PageContainer>
     </header>
   );
