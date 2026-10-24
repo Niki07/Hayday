@@ -350,3 +350,48 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: `--color-accent` is `#C2651F`, hover `#A3521A`, soft tint `#FBF1E6`, in `globals.css` only. Inter font and everything else in D-010 stand.
 - Why: The final logo (D-035) is brown-orange on cream; one brand color across site and slides. White on `#C2651F` is about 4.6:1, enough for the large button text used here.
 - Consequences / shortcuts: Body text stays near-black; the accent is only for buttons, the wordmark and the headline amount. Draft numbering note: D-033 and D-034 belong to handoff 06; the logo entry was renumbered to D-035.
+
+## D-037 — Result and claim pages: structure, "looks correct" rule and print approach
+- Date: 2026-10-24
+- Decided by: Sonnet (session: handoffs/05-result-and-claim.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: `/check/result` reads from `useCheck()` (handoff 04's provider). Findings with severity `info` go in a smaller "Also noticed" group; everything else is a card sorted by amount. The green "This pay stub looks correct" state shows when `totalOwed === 0` and there is no high or medium finding, and lists `checkedRules` with plain names (`result.rule.<id>` strings). If `totalOwed` is 0 but a high or medium finding exists, the headline reads "We found problems on this pay stub" instead of "$0.00". Cards hide the amount when it is 0. The green state uses Tailwind green, not the accent, because the accent is now brown-orange (D-036). "Prepare my claim" is hidden in the green state. An extra ghost link "Change my answers" goes to `/check/review`. Severity is shown as a dot plus a text label so it is not colour-only.
+- Why: Follows the handoff. The $0 headline case and the hidden claim button are small gaps the handoff did not cover; showing "You may be owed $0.00" or offering a claim letter for a correct stub would be wrong.
+- Consequences / shortcuts: None.
+
+## D-038 — Claim page: letter is requested on load, cached in memory, name regenerates it
+- Date: 2026-10-24
+- Decided by: Sonnet (session: handoffs/05-result-and-claim.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: `/check/claim` POSTs `{ stub, answers, result, workerName? }` to `/api/claim-letter` on load. Letters are cached in a module-level `Map` keyed by the result plus name plus attempt, with one shared in-flight promise per key (so React's double effect run in dev makes one request). The optional name field is local state only; "Update my letter" (or Enter) regenerates the letter with `workerName`, which is a second 8–10 s call. "Download PDF" is `window.print()`; `print.css` (imported by the page) hides `body > header`, `body > footer` and `.no-print`, shows both letters regardless of the mobile tab, puts a page break after each letter, and prints a third page with a bilingual findings table and disclaimer. Mobile uses tabs (default tab = the UI language), desktop (lg) shows two columns. "Copy text" uses `navigator.clipboard`, with a message if it fails.
+- Why: The handoff asks for load-time generation and a name field; regenerating on request is the simplest way to let a name appear in the letter. The cache keeps back-and-forth between result and claim instant. No PDF library, per D-009.
+- Consequences / shortcuts: The cache lives only until reload. The name is also sent to the model provider while writing the letter (as the existing route allows); nothing is stored by Hayday. The print table headings are "English / Spanish" pairs taken from `i18n.ts` directly. Chrome and Safari both offer "Save as PDF" in the print dialog; the on-screen hint says so. `check-state.tsx`'s header comment still mentions `clearStoredCheck()` in `stored-check.ts`; that file was a temporary reader of the same sessionStorage key and was deleted once the provider landed (comment is stale, harmless).
+
+## D-039 — Check state: external store over sessionStorage, shared key, small thumbnail
+- Date: 2026-10-24
+- Decided by: Sonnet (session: handoffs/04-upload-and-review.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: `src/lib/check-state.tsx` keeps `{ stub, answers, result, imagePreview }` in sessionStorage key `hayday-check` and reads it with `useSyncExternalStore`, re-parsing only when the raw string changes. `CheckProvider` (wrapped around `/check` in `src/app/check/layout.tsx`) exposes `useCheck()` with `ready`, `start(next)` (replace all, clears result), `update(patch)` and `reset()`. `ready` is false during hydration; the review page renders its form only once ready so the form starts from stored data. The stored `imagePreview` is a 320 px JPEG thumbnail (about 13 KB), not the upload; if sessionStorage is full it is dropped first.
+- Why: Same pattern as D-011, avoids hydration mismatches and setState-in-effect lint errors. Reading the raw key each snapshot keeps it in step with handoff 05's `stored-check.ts` (`clearStoredCheck`), which writes the same key without telling this module. Storing the 1600 px photo would blow the sessionStorage quota.
+- Consequences / shortcuts: Handoff 05 may keep using `stored-check.ts` or switch to `useCheck()`; both read and write the same JSON. A private-mode browser that blocks sessionStorage loses state on reload (in-memory fallback only until the next write).
+
+## D-040 — Upload page: client downscale, PDFs sent as-is, error handling
+- Date: 2026-10-24
+- Decided by: Sonnet (session: handoffs/04-upload-and-review.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: `src/lib/image.ts` draws the chosen image on a canvas (white background, long edge 1600 px, JPEG 0.85) and POSTs the base64 to `/api/extract`. PDFs are sent unchanged with `application/pdf`; `/api/extract` does not accept that type (D-020), so a PDF gets a 400 and the worker sees "We cannot read that kind of file" with the by-hand option. No multi-page handling. A request that takes more than 75 s is aborted. Errors map to a friendly message by code (too_large, bad_request, network, other) and always offer **Try again** (re-sends the already prepared file) and **Enter details by hand** (empty stub with `payType: "unknown"`, no confidence, so the review page shows the by-hand intro). `payType: "unknown"` with `confidence: 0` from the API goes to review with an amber "could not read this stub" notice.
+- Why: Handoff says PDFs as-is and no multi-page support. The 75 s timeout is above the route's `maxDuration` of 60 s so a server timeout surfaces as a server error first.
+- Consequences / shortcuts: PDF upload is effectively a dead end until the route accepts PDFs (Open item for Fable: either accept `application/pdf` in the route and handle it in `llm.ts`, or drop PDF from the file picker's `accept`). Chrome on desktop cannot decode HEIC, so it shows the "could not open that picture" error; phones convert it fine. The "Try a sample" sheet uses native `<dialog>`.
+
+## D-041 — Review form rules: required answers, defaults, conditional fields
+- Date: 2026-10-24
+- Decided by: Sonnet (session: handoffs/04-upload-and-review.md)
+- Status: Accepted
+- Importance: Minor
+- Decision: County, rest breaks and meal breaks have no default when the stub came from a photo or by hand; "Check my pay" shows inline errors until they are answered (samples arrive with answers, so that path has no friction). Days worked is a 1–7 selector (default 5) with one hours input per day (default 8; each must be 1–24). "Paid by the piece" is pre-set from the pay type (piece or mixed = yes). Hourly fields (rate, overtime hours and rate) hide when the pay type is "piece" and the extractor found none, and piece fields hide for "hourly" likewise; a value the extractor did find always stays visible. I added overtime hours and rate fields to the handoff's list because `hoursWorked` handling in D-027 depends on them. Counties are stored as plain names ("Fresno", "San Joaquin") matching `samples.ts`; anything outside the eight Central Valley counties is stored as "Other". The form fields are strings until submit; the stub keeps the extractor's `rawText`, `deductions`, `employeeName`, `pieceUnitName` and `confidence`.
+- Why: A silent default of "yes" to rest/meal breaks would hide premiums the worker may be owed; asking costs one tap each and is demo step 4 anyway. Showing only relevant fields keeps the phone form short. Pay periods longer than 7 days are not supported, per the handoff ("up to 7 inputs").
+- Consequences / shortcuts: A biweekly pay period only captures one week of daily hours, so overtime on the second week is not checked. Changing the pay type does not re-sync "paid by the piece".

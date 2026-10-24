@@ -57,9 +57,13 @@ The result page shows the headline amount and one card per finding with rule, pl
 - The dev server on port 3000 belongs to the planning session; if you need your own, use `PORT=3001 npm run dev`.
 
 ## Report back (filled in by the subrunner)
-- Status:
+- Status: Done. Not committed (per the task). `npm run lint` and `tsc --noEmit` pass.
 - What was built:
-- What was NOT done and why:
-- Decisions logged: D-___
-- Open questions for Fable:
-- How to verify:
+  - `src/app/check/result/page.tsx`: headline "You may be owed $184.47" (accent colour), cards sorted by amount (title, amount, severity dot + label, explanation, citation), smaller "Also noticed" group for info findings, green "This pay stub looks correct" state listing the checked rules, estimate disclaimer with a button to `/help`, **Prepare my claim**, **Check another pay stub** (`reset()` then `/check`), and a small "Change my answers" link to `/check/review`. No data shows a link back to `/check`.
+  - `src/app/check/claim/page.tsx` + `print.css`: optional name field, POST to `/api/claim-letter` on load with "Writing your letter..." progress, English and Spanish side by side on desktop and tabbed below 1024 px, **Download PDF** (`window.print()`), **Copy text** per language, next-steps checklist (links to `/help` and the Labor Commissioner claim page), error state with retry.
+  - About 90 strings with the prefixes `result.` and `claim.` appended to `src/lib/i18n.ts`, English and Spanish.
+  - Uses `useCheck()` from handoff 04's `check-state.tsx` (I first wrote a temporary reader and deleted it when 04 landed).
+- What was NOT done and why: No native print-preview screenshot (the browser pane cannot open the print dialog). I emulated it by applying the `@media print` rules to the screen and checking: header, footer and controls hidden, both letters shown, break-after on each letter, third page with the findings table. Page breaks and the `@page` margin are not visually confirmed; do a quick Cmd+P check in Chrome. Not tested through the full 04 flow by clicking (I seeded `sessionStorage` instead), and not tested on a real phone.
+- Decisions logged: D-037, D-038
+- Open questions for Fable: None blocking. Minor: the letter disappears behind the "Writing your letter..." box while a name update regenerates it (8–10 s live). Fine for the demo; could keep the old letter dimmed if wanted.
+- How to verify: Run the app, go to `/check?sample=1`, pick the grape sample, review, "Check my pay" and expect $184.47 with three cards. Then **Prepare my claim**; wait for both letters; enter a name and press **Update my letter**; press **Download PDF** and expect a 3-page preview (English, Spanish, findings table) without header, footer or buttons. Pick the "correct stub" sample for the green state. Check 375 px width for no horizontal scroll (verified).

@@ -1,0 +1,78 @@
+/* Print stylesheet for /check/claim (handoff 05). "Download PDF" is window.print(): the browser's
+   "Save as PDF" turns this into the file. Page 1 is the English letter, page 2 the Spanish letter,
+   page 3 the findings table. The site header, footer and every on-screen control are hidden. */
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 18mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  body > header,
+  body > footer,
+  .no-print {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+
+  .print-only {
+    display: block;
+  }
+
+  .letter-page {
+    display: block !important;
+    break-after: page;
+    page-break-after: always;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #fff !important;
+  }
+
+  .letter-text {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 11.5pt;
+    line-height: 1.5;
+    color: #000;
+  }
+
+  .letter-columns {
+    display: block !important;
+  }
+
+  .findings-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10.5pt;
+  }
+
+  .findings-table th,
+  .findings-table td {
+    border-bottom: 1px solid #999;
+    padding: 6px 4px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .findings-table .amount {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .findings-table tr {
+    break-inside: avoid;
+  }
+}
