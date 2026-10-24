@@ -55,6 +55,7 @@ This project uses Next.js 16.4.3, which has breaking changes from what you may r
 - Never force-push, never rewrite shared history, never run `rm -rf` on anything you did not create this session, never delete the `.env`.
 - Do not install large or unusual dependencies without a one-line reason in `ENGINEERING.md`.
 - "It compiles" is not done. Run it, open it in the browser, and check the demo path actually works.
+- Before every `vercel deploy`, run `npm run build` locally. Lint and tsc do not catch everything the production build does.
 
 ## Hackathon working style
 - Demo first. Build what the judges will see, then the rest.
