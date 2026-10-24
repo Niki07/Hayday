@@ -161,3 +161,12 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: `vitest@5` is installed as a dev dependency using `--legacy-peer-deps` because of a peer range conflict between `vite@8` and the scaffold's `@types/node@^20`. D-009 claimed it was preinstalled; it was not, because the scaffold was copied before its install finished.
 - Why: Upgrading `@types/node` mid-build risks breaking other sessions; the peer warning is harmless for running tests.
 - Consequences / shortcuts: Any future `npm install` in this project should also pass `--legacy-peer-deps`.
+
+## D-016 — Answers to handoff 01 open questions
+- Date: 2026-10-24
+- Decided by: Fable 5.1 (planning)
+- Status: Accepted
+- Importance: Minor
+- Decision: (1) Keep the verified `/help` list as is; adding more organizations is a polish task after the demo path works. (2) Formal "usted" Spanish is confirmed for all copy. (3) The brief English flash on first Spanish load is acceptable for the demo; do not spend time on it.
+- Why: Demo-first (CLAUDE.md). None of the three affects the demo script.
+- Consequences / shortcuts: If time remains in hour 5+, Kern County organizations are the first polish item.
