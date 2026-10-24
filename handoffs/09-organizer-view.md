@@ -56,9 +56,18 @@ Hayday checks one worker's stub against California farm labor pay rules (`checkP
 - Whether `weekly-ot` should run with no daily hours (recommend: yes if `hoursWorked > 40`)
 
 ## Report back (filled in by the subrunner)
-- Status:
+- Status: Done, 13:37. Every "Done when" item checked. Nothing committed (as instructed).
 - What was built:
-- What was NOT done and why:
-- Decisions logged: D-___
-- Open questions for Fable:
+  - `src/lib/rules/organizer.ts`: `organizerAnswers(stub, county)` exactly as specified, and `checkStubOnly(stub, county)`. **The handoff's assumption was wrong:** with `dailyHours: []`, `piece-rest` (and `weekly-ot`) can never fire, because they count from the worker's days. Escalated to a Fable 5.1 agent, which chose stub-only estimates that reuse the existing `pieceRest`/`weeklyOt` checks with assumed days (5-day week for rest breaks; 8-hour days for weekly OT, so only hours over 40 a week). Explanations are rewritten for organizers, estimated findings are marked "est." on the page, in the CSV and in print, and a caveat line is always shown. No existing check, amount, explanation or test value changed. Nothing throws on empty `dailyHours`; no guards were needed (test added).
+  - `src/lib/fixtures/organizer-samples.ts`: six Sunfield Vineyards LLC stubs (two weeks, Fresno) plus `organizerExpected`. Pattern: rest breaks not paid 4 of 6 ($158.59 est.), stub does not add up 2 of 6 ($60.00), 5 of 6 with issues, $218.59 total, P.R. correct.
+  - `src/lib/organizer.ts`: initials, `summarize` (frequency-sorted patterns), `periodLabel`, `toCsv`. No amounts computed there.
+  - `src/app/organizer/page.tsx` (client), `layout.tsx` (noindex, nofollow), `print.css` (`org-` prefixed). County select, employer field, multi-photo upload (downscaled, at most 2 in flight, per-row Waiting/Reading/error with Try again, Remove), Load sample employer, Clear all, summary cards, pattern list with CSS bars, table with initials only and totals row, Export CSV, Print. In-memory only; the privacy line says a reload clears it.
+  - `src/lib/i18n.ts`: `org.*` keys appended in English and Spanish.
+  - `src/lib/rules/__tests__/organizer.test.ts`: 8 tests (empty dailyHours, estimate = worker path for samples 1 and 2, no invented OT on the correct stub, two-week periods, fixture per-stub and pattern counts, CSV initials and totals, initials).
+- What was NOT done and why: Nothing from the Done list is missing. The real browser print dialog was not opened (it would block the pane); I confirmed the print stylesheet's rules are loaded and hide the header, footer and the 12 `org-no-print` controls. Labels use the worker-facing finding titles (e.g. "The numbers on your stub do not add up"), not organizer-specific wording (D-053).
+- Decisions logged: D-052 (Fable 5.1 via this subrunner: stub-only estimates, what the view can and cannot detect, closes the weekly-ot question), D-053 (build choices). D-051 was taken by another session at 13:31.
+- Open questions for Fable: None blocking. Optional: whether organizer-specific finding titles are worth adding if the page is kept.
 - How to verify:
+  - `npm test` (60 pass), `npx tsc --noEmit`, `npm run lint`, `npm run build` all pass (last run 13:37).
+  - `curl -s localhost:3000/organizer | grep -c noindex` → 1. `grep -rln organizer src public` finds only the new organizer files, so nothing links to it.
+  - Browser, `localhost:3000/organizer`: Load sample employer → 6 / 5 / $218.59 est., top line "Rest breaks not paid on top of piece pay — 4 of 6 stubs — $158.59 est.". Spanish toggle gives "4 de 6 talones". Adding `public/samples/sample-1.png` and `sample-3.png` (live API) added two rows, read in parallel: M.H. 48 h, weekly OT $90.40 + rest breaks $37.67 = $128.07 est.; A.L. citrus stub with no hours → "missing required information" only. Export CSV → `hayday-organizer-sunfield-vineyards-llc.csv`, one row per stub plus totals and a caveat row, initials only. At 375 px the table scrolls inside its box and the page does not scroll sideways.

@@ -1,0 +1,11 @@
+import type { Metadata } from "next";
+
+// Hidden page (handoff 09): not linked from anywhere and kept out of search engines.
+export const metadata: Metadata = {
+  title: "Organizer view · Hayday",
+  robots: { index: false, follow: false },
+};
+
+export default function OrganizerLayout({ children }: LayoutProps<"/organizer">) {
+  return children;
+}

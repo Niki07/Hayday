@@ -1,0 +1,36 @@
+/* Print stylesheet for /organizer (handoff 09). Print shows the summary, patterns and table; the site
+   header, footer and every control are hidden. Class names are prefixed so they do not touch /check/claim. */
+
+.org-print-only {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 14mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  body > header,
+  body > footer,
+  .org-no-print {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+
+  .org-print-only {
+    display: block;
+  }
+
+  .org-table-wrap {
+    overflow: visible !important;
+  }
+}
