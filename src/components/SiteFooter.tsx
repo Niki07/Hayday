@@ -30,6 +30,12 @@ export default function SiteFooter() {
           >
             {t("footer.terms")}
           </Link>
+          <Link
+            href="/organizer"
+            className="inline-flex min-h-11 items-center font-semibold text-accent underline underline-offset-4"
+          >
+            {t("footer.organizers")}
+          </Link>
         </div>
       </PageContainer>
     </footer>
