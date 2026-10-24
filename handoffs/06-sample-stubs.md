@@ -36,9 +36,15 @@ Each of the five sample stubs renders at `/samples/[id]` as a realistic-looking 
 - The dev server on port 3000 belongs to the planning session; if you need your own, use `PORT=3001 npm run dev`.
 
 ## Report back (filled in by the subrunner)
-- Status:
+- Status: Done. Not committed (per instructions).
 - What was built:
+  - `src/app/samples/[id]/page.tsx`: renders a sample as an agricultural payroll stub (employer block, check no. and pay date, employee with "Worker ID XXXX", pay period and pay type, earnings table in hours or units, deductions, gross, net, perforated footer). Off-white paper, gray rules, shadow, monospace font. Accepts slug or 1–5, 404 otherwise. The paper is a full-screen overlay so the site header and footer do not show (D-033).
+  - `src/app/samples/page.tsx`: index of all five with English and Spanish labels, links to `/samples/1`…`/samples/5`.
+  - `public/samples/sample-1.png` … `sample-5.png`: 1200 px wide, 948–1090 px tall, from headless Chrome (D-034). Checked 1, 3, 4, 5 by eye; 2 has the same layout as 1.
 - What was NOT done and why:
-- Decisions logged: D-___
-- Open questions for Fable:
-- How to verify:
+  - Did not run my own dev server: `next dev` allows one per folder and the planning session's is on port 3000, so I read pages from that one (read-only).
+  - `npm run lint` is not fully green: 7 errors, all in `src/app/check/page.tsx` (react-hooks/refs, lines ~189–194, another session's file). `npx eslint src/app/samples` is clean and `tsc` reports nothing for my files.
+  - Did not link "Check this sample" from the index to `/check?sample=N` (that flow belongs to 04/05).
+- Decisions logged: D-033, D-034
+- Open questions for Fable: None. If you want a truly bare layout, the alternative is a route group with its own root layout, which means moving `layout.tsx` and the existing pages.
+- How to verify: Open `http://localhost:3000/samples/1` full screen (and `/samples/almond-sweeping`, `/samples`). Open the five PNGs in `public/samples/`. Regenerate a PNG with: Chrome `--headless=new --hide-scrollbars --window-size=1200,1400 --screenshot=out.png http://localhost:3000/samples/N`, then crop the bottom to the paper.

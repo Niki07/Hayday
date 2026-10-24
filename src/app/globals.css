@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Design tokens. One accent (deep green), neutral grays, white background.
+/* Design tokens. One accent (brown-orange, from the logo), neutral grays, white background.
    Dark mode is out of scope (handoff 01). */
 :root {
   --background: #ffffff;
@@ -10,9 +10,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-accent: #166534;
-  --color-accent-hover: #14532d;
-  --color-accent-soft: #ecf6ef;
+  --color-accent: #C2651F;
+  --color-accent-hover: #A3521A;
+  --color-accent-soft: #FBF1E6;
   --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
