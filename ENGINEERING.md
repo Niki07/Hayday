@@ -476,3 +476,12 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: (1) The § 226.7 link landing on leginfo's version picker is acceptable; the link label already says to pick the newest version. (2) Keep § 1182.12 in the home trust line; it is the minimum wage section and belongs there. (3) The statewide pair for "Other California county" stays as is; CRLA serves rural California statewide.
 - Why: None of the three affects the demo; time goes to the recording and slides.
 - Consequences / shortcuts: A legal aid reviewer may want a better statewide list later.
+
+## D-051 — "No pay stub? Enter what you know" is a visible option on the upload page
+- Date: 2026-10-24
+- Decided by: Niki's team with Fable 5.1
+- Status: Accepted
+- Importance: Minor
+- Decision: The by-hand entry path that handoff 04 built for extraction failures is now a visible button on `/check`, with a note that employers must provide a stub every payday. In by-hand mode the review page shows a notice that a missing stub is itself a Labor Code § 226 problem and that the worker's own hours notes count as evidence. No rule changes.
+- Why: Niki's idea. Many farmworkers never receive a stub; this turns a dead end into a finding and gives a path that needs no photo and no AI.
+- Consequences / shortcuts: By-hand checks can only run the rules that the entered numbers support; the engine already handles missing fields.
