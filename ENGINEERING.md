@@ -297,7 +297,7 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Why: The handoff asked for "near $184.50". The amounts come from the real arithmetic, not from tuning to a round number. $184.47 is within the $1 the handoff allows.
 - Consequences / shortcuts: The demo script and slides should say $184.47. Handoff 03's `demo-stub.ts` should now return `samples[0].stub`; its current numbers (412 trays at $1.10) give a different result.
 
-## D-024 — vite installed as a dev dependency (addendum to D-015)
+## D-031 — vite installed as a dev dependency (addendum to D-015)
 - Date: 2026-10-24
 - Decided by: Fable 5.1 (planning)
 - Status: Accepted
@@ -305,3 +305,12 @@ Rule (from `CLAUDE.md`): a decision that is not logged here did not happen.
 - Decision: `vite` is installed alongside `vitest@5`, which needs it as a peer, again with `--legacy-peer-deps`.
 - Why: `npm test` failed with "Cannot find package 'vite'" after D-015. With vite present the rules suite (48 tests) runs in about 150 ms.
 - Consequences / shortcuts: None beyond D-015.
+
+## D-032 — Demo total is $184.47; wave-1 follow-ups
+- Date: 2026-10-24
+- Decided by: Fable 5.1 (planning)
+- Status: Accepted
+- Importance: Minor
+- Decision: The demo headline amount is $184.47 (sample `grape-trays`, D-030), replacing the $184.50 placeholder in PLAN.md. Handoff 03's `demo-stub.ts` is replaced by `samples[0].stub` (03 does this). Handoff 04 labels the hours field "Total hours" (D-027). Handoffs 04 and 05 use the `/api/extract` error shape and timings from 03's report.
+- Why: Keep every number on screen, in the plan and on the slides identical.
+- Consequences / shortcuts: None.

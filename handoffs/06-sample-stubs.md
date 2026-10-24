@@ -31,6 +31,10 @@ Each of the five sample stubs renders at `/samples/[id]` as a realistic-looking 
 ## Out of scope
 - Anything in `/check`
 
+## Notes from wave 1 (read these)
+- `samples.ts` ids are slugs (`grape-trays`, `almond-sweeping`, `citrus-bins`, `correct-stub`, `unpaid-hours`); `getSample` also accepts 1–5. Route `/samples/[id]` should accept both.
+- The dev server on port 3000 belongs to the planning session; if you need your own, use `PORT=3001 npm run dev`.
+
 ## Report back (filled in by the subrunner)
 - Status:
 - What was built:

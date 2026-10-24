@@ -43,6 +43,13 @@ A worker can take a photo or upload a file, see "Reading your pay stub...", then
 ## Decisions you may hit (escalate to Fable 5.1)
 - Supporting multi-page PDFs (do not; first page only or by-hand)
 
+## Notes from wave 1 (read these)
+- `src/lib/fixtures/samples.ts` exports `samples` and `getSample(id)`; `getSample` accepts the slug or a 1-based number, so `?sample=1` maps to the demo stub `grape-trays` ($184.47).
+- `/api/extract` errors: `{ error: "bad_request" | "too_large" | "not_configured" | "extract_failed", message }`. Live extraction takes 7–15 s: show the progress state. On `payType: "unknown"` with `confidence: 0`, send the worker to manual entry.
+- `hoursWorked` means total hours including overtime (D-027). Label the field "Total hours".
+- Downscaling in the browser is required, not optional (D-023): long edge 1600 px, JPEG 0.85. This also converts iPhone HEIC to JPEG.
+- The dev server on port 3000 belongs to the planning session; do not start a second one on 3000. If you need your own, use `PORT=3001 npm run dev`.
+
 ## Report back (filled in by the subrunner)
 - Status:
 - What was built:

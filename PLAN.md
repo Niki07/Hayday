@@ -12,7 +12,7 @@ A farmworker photographs their pay stub. Hayday reads it, checks it against Cali
 2. Tap **Check my pay stub**. Show the two options, **Take a photo** and **Upload a file**. For the demo tap **Try a sample** and pick the piece-rate stub (or photograph the sample stub shown on the laptop screen with the phone, if the live extraction is reliable).
 3. "Reading your pay stub..." then the fields appear. Point out that the AI read a crumpled photo and the worker can correct anything.
 4. Answer the three questions: hours actually worked each day, rest breaks, meal breaks.
-5. Result page: **"You may be owed $184.50"** with three cards: piece-rate rest breaks not paid, overtime after 8 hours missing, 2 hours not on the stub. Each card shows the rule, the citation and the dollars.
+5. Result page: **"You may be owed $184.47"** with three cards: piece-rate rest breaks not paid, overtime after 8 hours missing, 2 hours not on the stub. Each card shows the rule, the citation and the dollars.
 6. Tap **Prepare my claim**. The bilingual complaint letter appears, filled in. Tap download.
 7. Close: "One photo. Money back. Nothing stored." Mention the organizer view if built.
 

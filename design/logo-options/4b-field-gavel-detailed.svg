@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+<rect width="200" height="200" rx="44" fill="#F6ECD9"/>
+<!-- wheat stalk, behind the gavel: base bottom-right, ear top-left -->
+<g transform="translate(128 168) rotate(-42)" fill="#7A3A10" stroke="#7A3A10" stroke-linecap="round">
+  <path d="M0 0 V-96" stroke-width="5" fill="none"/>
+  <!-- awns (whiskers) -->
+  <g stroke-width="1.8" fill="none">
+    <path d="M-7 -40 L-22 -62 M7 -40 L22 -62 M-7 -56 L-22 -78 M7 -56 L22 -78 M-7 -72 L-20 -94 M7 -72 L20 -94 M0 -100 L0 -124 M-4 -96 L-10 -118 M4 -96 L10 -118"/>
+  </g>
+  <!-- grains, paired, pointing up -->
+  <path d="M0 -30 C-13 -33 -19 -46 -10 -56 C-2 -50 0 -40 0 -30Z"/><path d="M0 -30 C13 -33 19 -46 10 -56 C2 -50 0 -40 0 -30Z"/>
+  <path d="M0 -46 C-13 -49 -19 -62 -10 -72 C-2 -66 0 -56 0 -46Z"/><path d="M0 -46 C13 -49 19 -62 10 -72 C2 -66 0 -56 0 -46Z"/>
+  <path d="M0 -62 C-13 -65 -19 -78 -10 -88 C-2 -82 0 -72 0 -62Z"/><path d="M0 -62 C13 -65 19 -78 10 -88 C2 -82 0 -72 0 -62Z"/>
+  <path d="M0 -78 C-11 -81 -16 -92 -8 -100 C-2 -95 0 -87 0 -78Z"/><path d="M0 -78 C11 -81 16 -92 8 -100 C2 -95 0 -87 0 -78Z"/>
+  <path d="M0 -92 C-7 -98 -6 -110 0 -116 C6 -110 7 -98 0 -92Z"/>
+  <!-- a leaf low on the stem -->
+  <path d="M0 -8 C-16 -10 -26 -22 -24 -36 C-12 -30 -4 -20 0 -8Z" fill="#C2651F" stroke="none"/>
+</g>
+<!-- sound block -->
+<rect x="22" y="170" width="92" height="14" rx="4" fill="#C2651F"/>
+<rect x="32" y="162" width="72" height="10" rx="3" fill="#7A3A10"/>
+<!-- handle -->
+<path d="M62 150 L140 72" stroke="#C2651F" stroke-width="11" stroke-linecap="round"/>
+<!-- grip -->
+<rect x="48" y="138" width="22" height="40" rx="8" fill="#7A3A10" transform="rotate(-45 59 158)"/>
+<!-- mallet head -->
+<rect x="112" y="46" width="76" height="34" rx="9" fill="#C2651F" transform="rotate(45 150 63)"/>
+<rect x="118" y="46" width="12" height="34" rx="3" fill="#7A3A10" transform="rotate(45 150 63)"/>
+<rect x="170" y="46" width="12" height="34" rx="3" fill="#7A3A10" transform="rotate(45 150 63)"/>
+<rect x="140" y="50" width="20" height="5" rx="2.5" fill="#E0A66B" transform="rotate(45 150 63)"/>
+</svg>

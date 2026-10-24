@@ -49,6 +49,13 @@ The result page shows the headline amount and one card per finding with rule, pl
 ## Decisions you may hit (escalate to Fable 5.1)
 - Whether to email the letter (no; copy and print only)
 
+## Notes from wave 1 (read these)
+- Demo total is $184.47, sample `grape-trays` (findings `daily-ot`, `piece-rest`, `unpaid-hours`). Sample `correct-stub` is the zero-findings case.
+- `/api/claim-letter` never fails for AI reasons (falls back to a template letter); only 400 on a bad body, 500 on missing config. Takes about 8–10 s live: show "Writing your letter...".
+- `src/lib/fixtures/letters.ts` exports `formatUsd`; reuse it for currency.
+- The session state key agreed for 04 is `hayday-check` in `sessionStorage` (D-008). 04 is being built in parallel; if `src/lib/check-state.tsx` exists, use it, else read that key directly.
+- The dev server on port 3000 belongs to the planning session; if you need your own, use `PORT=3001 npm run dev`.
+
 ## Report back (filled in by the subrunner)
 - Status:
 - What was built:
